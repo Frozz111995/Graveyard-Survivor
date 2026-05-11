@@ -47,6 +47,55 @@ MonoBehaviour:
   desktop: {fileID: 3657629621399558797, guid: f9e7aeea378de584ba915af70774d966, type: 3}
   mobile: {fileID: 9093177955984990272, guid: b6feb5469f219f94a9aea8b9740b456b, type: 3}
   web: {fileID: 6791802459818362855, guid: 93f704ebf3382db478b60df6e0f676d1, type: 3}
+--- !u!1 &2610700344626248760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8369240901998689807}
+  - component: {fileID: 7465716240968463274}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8369240901998689807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2610700344626248760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3976985091596841435}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7465716240968463274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2610700344626248760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d033ec3350cde45a2d4c8948eb2545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 2292711728577326918, guid: 420ad935a704baa4d8f94e180215da3c,
+    type: 3}
+  minRadius: 8
+  maxRadius: 15
+  spawnInterval: 1
 --- !u!1 &5894049620850972542
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,6 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8999020288360769281, guid: e75af6f58d23ce2479d55761f763ca19,
     type: 3}
+  enemySpawner: {fileID: 0}
 --- !u!1 &7433135796101665509
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,5 +174,6 @@ Transform:
   m_Children:
   - {fileID: 4324905873908729012}
   - {fileID: 3848137569404628965}
+  - {fileID: 8369240901998689807}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

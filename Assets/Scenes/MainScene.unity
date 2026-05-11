@@ -123,6 +123,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &532962819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6887612388294532494}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d033ec3350cde45a2d4c8948eb2545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820336963
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +179,11 @@ PrefabInstance:
       propertyPath: cameraFollow
       value: 
       objectReference: {fileID: 8452932446219236927}
+    - target: {fileID: 2918747124136438146, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: enemySpawner
+      value: 
+      objectReference: {fileID: 532962819}
     - target: {fileID: 3976985091596841435, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -222,6 +239,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: Logic
       objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 8452932446219236930}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: marginX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: padding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: halfWidth
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: maxRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: minRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: halfHeight
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 8452932446219236930}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: enemiesRoot
+      value: 
+      objectReference: {fileID: 820336964}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: spawnDistanceX
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: spawnDistanceZ
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465716240968463274, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: projectilesRoot
+      value: 
+      objectReference: {fileID: 820336964}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -235,6 +312,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2041731288275502230, guid: 3dbb4d67d9b5de34aa446fa8a6b8e606,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4840367237279037589, guid: 3dbb4d67d9b5de34aa446fa8a6b8e606,
         type: 3}
       propertyPath: m_Name
@@ -354,6 +436,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 15, z: -15}
   smoothSpeed: 5
+--- !u!20 &8452932446219236930 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8709636316237896044, guid: 3dbb4d67d9b5de34aa446fa8a6b8e606,
+    type: 3}
+  m_PrefabInstance: {fileID: 8452932446219236925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
