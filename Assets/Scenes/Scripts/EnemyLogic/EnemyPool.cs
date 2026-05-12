@@ -29,9 +29,9 @@ public class EnemyPool : MonoBehaviour
             ? _inactive.Pop()
             : Instantiate(prefab, enemiesRoot);
 
-        e.transform.position = position;
         e.gameObject.SetActive(true);
         e.Init(player);
+        e.Teleport(position);
         return e;
     }
 

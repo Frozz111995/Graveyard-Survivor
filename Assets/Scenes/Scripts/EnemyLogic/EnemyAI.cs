@@ -34,4 +34,12 @@ public class EnemyAI : MonoBehaviour
         if (direction != Vector3.zero)
             transform.forward = direction;
     }
+
+    public void Teleport(Vector3 position)
+    {
+        _cc.enabled = false;
+        transform.position = position;
+        _cc.enabled = true;
+        _velocityY = 0f;
+    }
 }
