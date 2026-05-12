@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2871191470483429980}
   - component: {fileID: 3062439423482823869}
   - component: {fileID: -6242144106020514866}
+  - component: {fileID: 7110356199797414247}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -159,4 +160,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b37ceaca3255e448aaddcb0bd43e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 10
+  maxHp: 20
+--- !u!114 &7110356199797414247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2292711728577326918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c5477e11acfe3e46bb6048cdb753ed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashDuration: 0.1
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  deathParticles: {fileID: 6584224753604373311, guid: 5975e0aee511b1d4985ad2afb924f565,
+    type: 3}
+  hitParticles: {fileID: 6584224753604373311, guid: ab962258bf049ee4b843ebf6a933f241,
+    type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 139c5711c2f1ae14caa0dae648de3a45, type: 3}
+  - {fileID: 8300000, guid: 168fe74c8d20651418db94acbcb47f99, type: 3}
+  - {fileID: 8300000, guid: a5c35e3fd9b46cf44bc230d482b4d0b7, type: 3}
+  - {fileID: 8300000, guid: a1e8cf1b93c741040868aee92264ab93, type: 3}
+  - {fileID: 8300000, guid: 75029536c0ea37e498a9203bcca0569b, type: 3}
+  hitSounds:
+  - {fileID: 8300000, guid: 67f0ea8db1ecbec4c9734d260c6bf5b2, type: 3}
+  - {fileID: 8300000, guid: 0e9e6cfc415f98a47a52d0f75a95e4f3, type: 3}
+  - {fileID: 8300000, guid: 254222539d160b440bc3955e5396ef27, type: 3}
+  - {fileID: 8300000, guid: a8dc4d358762e9c46aebe63ec81ba086, type: 3}
+  - {fileID: 8300000, guid: 630155a9e3a4fc24abc6fd24972f58ae, type: 3}
