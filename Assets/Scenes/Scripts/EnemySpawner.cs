@@ -3,19 +3,16 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-    public Transform player;
-    public Transform enemiesRoot;
+    [SerializeField] float margin = 3f;
+    [SerializeField] float spawnInterval = 1f;
 
-    public float margin = 3f;
-    public float spawnInterval = 1f;
-
-    private Camera _cam;
-    private bool _started;
+    Transform _player;
+    Camera _cam;
+    bool _started;
 
     public void SetPlayer(Transform playerTransform)
     {
-        player = playerTransform;
+        _player = playerTransform;
         _cam = Camera.main;
 
         if (!_started)
@@ -36,15 +33,12 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Vector3 spawnPos = GetSpawnPos();
-        var enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-        enemy.transform.SetParent(enemiesRoot);
-        enemy.GetComponent<EnemyAI>().Init(player);
+        EnemyPool.Instance.Get(GetSpawnPos(), _player);
     }
 
     Vector3 GetSpawnPos()
     {
-        float y = player.position.y;
+        float y = _player.position.y;
         Vector3[] vp = { new(0,0,0), new(1,0,0), new(0,1,0), new(1,1,0) };
         Vector3[] c = new Vector3[4];
 
@@ -59,10 +53,10 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 pos = side switch
         {
-            0 => Vector3.Lerp(c[2], c[3], t), // верх
-            1 => Vector3.Lerp(c[0], c[1], t), // низ
-            2 => Vector3.Lerp(c[0], c[2], t), // лево
-            _ => Vector3.Lerp(c[1], c[3], t), // право
+            0 => Vector3.Lerp(c[2], c[3], t),
+            1 => Vector3.Lerp(c[0], c[1], t),
+            2 => Vector3.Lerp(c[0], c[2], t),
+            _ => Vector3.Lerp(c[1], c[3], t),
         };
 
         Vector3 camCenter = (c[0] + c[1] + c[2] + c[3]) / 4f;

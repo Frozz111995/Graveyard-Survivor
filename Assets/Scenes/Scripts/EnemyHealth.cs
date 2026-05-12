@@ -9,7 +9,12 @@ public class EnemyHealth : MonoBehaviour
 
     public event Action OnDeath;
     public event Action<float, float> OnDamaged; // current, max — для UI хп бара
+    EnemyAI _ai;
 
+    void Awake()
+    {
+        _ai = GetComponent<EnemyAI>();
+    }
     void OnEnable()
     {
         _currentHp = maxHp;
@@ -29,7 +34,6 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         OnDeath?.Invoke();
-        // ReturnToPool() — добавим когда будет пул врагов
-        gameObject.SetActive(false);
+        EnemyPool.Instance.Return(_ai);
     }
 }
