@@ -93,8 +93,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 2292711728577326918, guid: 420ad935a704baa4d8f94e180215da3c,
     type: 3}
-  minRadius: 8
-  maxRadius: 15
+  player: {fileID: 0}
+  enemiesRoot: {fileID: 0}
+  margin: 3
   spawnInterval: 1
 --- !u!1 &5894049620850972542
 GameObject:
@@ -142,7 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8999020288360769281, guid: e75af6f58d23ce2479d55761f763ca19,
     type: 3}
-  enemySpawner: {fileID: 0}
+  cameraFollow: {fileID: 0}
+  enemySpawner: {fileID: 7465716240968463274}
 --- !u!1 &7433135796101665509
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,5 +177,53 @@ Transform:
   - {fileID: 4324905873908729012}
   - {fileID: 3848137569404628965}
   - {fileID: 8369240901998689807}
+  - {fileID: 8356150301313328783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7925700889897183133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8356150301313328783}
+  - component: {fileID: 2236012542692284605}
+  m_Layer: 0
+  m_Name: ProjectilePool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8356150301313328783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925700889897183133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3976985091596841435}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2236012542692284605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925700889897183133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4b6acb22151be4fa0f8f307b33720b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileRoot: {fileID: 0}
+  prefab: {fileID: 8520879103642327233, guid: 4582164f7fc6435498a8104d865c093c, type: 3}
+  initialSize: 20
