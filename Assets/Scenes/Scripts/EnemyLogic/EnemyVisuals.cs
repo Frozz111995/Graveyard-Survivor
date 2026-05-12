@@ -49,7 +49,7 @@ public class EnemyVisuals : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(Flash());
-    }
+    } 
 
     void HandleDeath()
     {

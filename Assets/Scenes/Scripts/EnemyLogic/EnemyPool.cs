@@ -17,7 +17,7 @@ public class EnemyPool : MonoBehaviour
 
         for (int i = 0; i < initialSize; i++)
         {
-            var e = Instantiate(prefab, enemiesRoot);
+            var e = Instantiate(prefab, Vector3.down * 1000f, Quaternion.identity, enemiesRoot);
             e.gameObject.SetActive(false);
             _inactive.Push(e);
         }
@@ -37,6 +37,7 @@ public class EnemyPool : MonoBehaviour
 
     public void Return(EnemyAI enemy)
     {
+        enemy.transform.position = Vector3.down * 1000f;
         enemy.gameObject.SetActive(false);
         _inactive.Push(enemy);
     }

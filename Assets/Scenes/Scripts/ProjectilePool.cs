@@ -16,7 +16,7 @@ public class ProjectilePool : MonoBehaviour
 
         for (int i = 0; i < initialSize; i++)
         {
-            var p = Instantiate(prefab, projectileRoot);
+            var p = Instantiate(prefab, Vector3.down * 1000f, Quaternion.identity, projectileRoot);
             p.gameObject.SetActive(false);
             _inactive.Push(p);
         }
@@ -36,6 +36,7 @@ public class ProjectilePool : MonoBehaviour
 
     public void Return(Projectile p)
     {
+        p.transform.position = Vector3.down * 1000f;
         p.gameObject.SetActive(false);
         _inactive.Push(p);
     }

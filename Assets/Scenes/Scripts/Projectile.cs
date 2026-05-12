@@ -3,7 +3,6 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] float speed = 10f;
-    [SerializeField] float damage = 10f;
     [SerializeField] float margin = 1f;
 
     Vector3 _direction;
@@ -35,9 +34,11 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player")) return; // игнорируем игрока
+    
         if (other.TryGetComponent<EnemyHealth>(out var health))
         {
-            health.TakeDamage(damage);
+            health.TakeDamage(PlayerStats.Instance.damage);
             ReturnToPool();
         }
     }

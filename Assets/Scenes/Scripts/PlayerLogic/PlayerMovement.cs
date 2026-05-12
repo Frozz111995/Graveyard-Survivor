@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         else
             _velocityY += Physics.gravity.y * Time.deltaTime;
 
-        Vector3 dir = new Vector3(move.x, 0, move.y) * 5f * Time.deltaTime;
+        Vector3 dir = new Vector3(move.x, 0, move.y) * PlayerStats.Instance.moveSpeed * Time.deltaTime;
         dir.y = _velocityY * Time.deltaTime;
         controller.Move(dir);
     }

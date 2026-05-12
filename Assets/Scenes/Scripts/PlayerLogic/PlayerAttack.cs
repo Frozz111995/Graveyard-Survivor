@@ -1,25 +1,39 @@
+// PlayerAttack.cs
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] float attackCooldown = 1f;
-    [SerializeField] float attackRadius = 10f;
+    public float attackCooldown = 1f;
+    public int projectileCount = 1;
+    public float burstInterval = 0.1f;
+
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] float attackRadius = 10f;
 
     float _cooldownTimer;
 
     void Update()
     {
         _cooldownTimer -= Time.deltaTime;
-
         if (_cooldownTimer > 0) return;
 
         var enemy = FindClosestEnemy();
         if (enemy == null) return;
 
         Vector3 direction = enemy.position - transform.position;
-        ProjectilePool.Instance.Get(transform.position, direction);
-        _cooldownTimer = attackCooldown;
+        StartCoroutine(FireBurst(direction));
+        _cooldownTimer = PlayerStats.Instance.attackCooldown;
+    }
+
+    IEnumerator FireBurst(Vector3 direction)
+    {
+        for (int i = 0; i < PlayerStats.Instance.projectileCount; i++)
+        {
+            if (Time.timeScale == 0) yield break;
+            ProjectilePool.Instance.Get(transform.position, direction);
+            yield return new WaitForSecondsRealtime(PlayerStats.Instance.burstInterval);
+        }
     }
 
     Transform FindClosestEnemy()
@@ -41,7 +55,7 @@ public class PlayerAttack : MonoBehaviour
 
         return closest;
     }
-    
+
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
