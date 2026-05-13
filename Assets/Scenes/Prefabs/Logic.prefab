@@ -239,6 +239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8097969133063105421}
   - component: {fileID: 4928774021829599994}
+  - component: {fileID: 6201209041987773415}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -284,6 +285,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1283550e0beec04a8e1fd8566cc172e, type: 2}
   - {fileID: 11400000, guid: 568a8f66fe476a14582851a2b7e21955, type: 2}
   - {fileID: 11400000, guid: 4b100db22d7ad894e9ad33ae638da922, type: 2}
+--- !u!114 &6201209041987773415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7490948552986743694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2480bd24a69b36845b14824cbe12c6c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 0}
+  levelText: {fileID: 0}
 --- !u!1 &7538526138161919030
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +309,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8528371905328761581}
   - component: {fileID: 1207247076932142139}
-  - component: {fileID: 6357310688582160427}
   m_Layer: 0
   m_Name: XPSystem
   m_TagString: Untagged
@@ -331,20 +345,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseXP: 100
   scaling: 1.5
---- !u!114 &6357310688582160427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7538526138161919030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2480bd24a69b36845b14824cbe12c6c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  levelText: {fileID: 0}
 --- !u!1 &7925700889897183133
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ public class Upgrade : ScriptableObject
                 PlayerStats.Instance.moveSpeed += value;
                 break;
             case UpgradeType.MaxHP:
-                PlayerStats.Instance.maxHP += value;
+                PlayerStats.Instance.UpgradeMaxHP(value);
                 break;
             case UpgradeType.ProjectileCount:
                 PlayerStats.Instance.projectileCount += Mathf.RoundToInt(value);
