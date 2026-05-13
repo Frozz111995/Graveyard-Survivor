@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 6604000032842101025}
   - component: {fileID: 6482618438943917832}
   m_Layer: 8
-  m_Name: Capsule
+  m_Name: PlayerVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,8 +218,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashDuration: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  hitSounds: []
-  deathSounds: []
+  hitSounds:
+  - {fileID: 8300000, guid: 69dee1a43daaec841b5df4986d793003, type: 3}
+  - {fileID: 8300000, guid: d52d217e54b596d48bfb486fed33279c, type: 3}
+  - {fileID: 8300000, guid: 4a820d3380b6d244f93ba098ea3003bb, type: 3}
+  - {fileID: 8300000, guid: cfae3f3ed6bab924f86bfd9cad2f116a, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 94eab5dfddb6e564db91d2b9f898307d, type: 3}
 --- !u!1 &8999020288360769281
 GameObject:
   m_ObjectHideFlags: 0
