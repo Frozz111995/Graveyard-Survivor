@@ -37,7 +37,7 @@ public class PlayerVisuals : MonoBehaviour
     void HandleDamaged(float current, float max)
     {
         AudioPool.Instance.Play(GetRandom(hitSounds), transform.position);
-        CameraFollow.Instance.Shake(0.2f, 0.15f);
+        CameraFollow.Instance.Shake(0.2f, 5f);
 
         StopAllCoroutines();
         StartCoroutine(Flash());

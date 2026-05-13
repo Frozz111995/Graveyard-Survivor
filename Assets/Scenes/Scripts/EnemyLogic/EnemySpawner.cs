@@ -1,3 +1,4 @@
+// EnemySpawner.cs
 using System.Collections;
 using UnityEngine;
 
@@ -33,7 +34,8 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        EnemyPool.Instance.Get(GetSpawnPos(), _player);
+        var config = EnemyPool.Instance.GetRandomConfig();
+        EnemyPool.Instance.Get(GetSpawnPos(), _player, config);
     }
 
     Vector3 GetSpawnPos()

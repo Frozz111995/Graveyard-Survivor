@@ -3,28 +3,38 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float moveSpeed = 3f;
+    float _moveSpeed;
+    float _contactDamage;
+    float _damageCooldown;
 
-    [Header("Damage")]
-    [SerializeField] float contactDamage = 10f;
-    [SerializeField] float damageCooldown = 1f;
+    Transform _player;
+    CharacterController _cc;
+    float _velocityY;
+    float _lastDamageTime = -999f;
 
-    private Transform player;
-    private CharacterController _cc;
-    private float _velocityY = 0f;
-    private float _lastDamageTime = -999f;
+    EnemyHealth _health;
 
-    public void Init(Transform playerTransform)
+    void Awake()
     {
-        player = playerTransform;
         _cc = GetComponent<CharacterController>();
+        _health = GetComponent<EnemyHealth>();
+    }
+
+    public void Init(Transform player, EnemyConfig config)
+    {
+        _player = player;
+        _moveSpeed = config.moveSpeed;
+        _contactDamage = config.contactDamage;
+        _damageCooldown = config.damageCooldown;
+
+        _health.Init(config.maxHP);
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (_player == null) return;
 
-        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 direction = (_player.position - transform.position).normalized;
         direction.y = 0f;
 
         if (_cc.isGrounded)
@@ -32,7 +42,7 @@ public class EnemyAI : MonoBehaviour
         else
             _velocityY += Physics.gravity.y * Time.deltaTime;
 
-        Vector3 move = direction * moveSpeed * Time.deltaTime;
+        Vector3 move = direction * _moveSpeed * Time.deltaTime;
         move.y = _velocityY * Time.deltaTime;
 
         _cc.Move(move);
@@ -44,10 +54,10 @@ public class EnemyAI : MonoBehaviour
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (!hit.gameObject.CompareTag("Player")) return;
-        if (Time.time - _lastDamageTime < damageCooldown) return;
+        if (Time.time - _lastDamageTime < _damageCooldown) return;
 
         _lastDamageTime = Time.time;
-        PlayerStats.Instance.TakeDamage(contactDamage);
+        PlayerStats.Instance.TakeDamage(_contactDamage);
     }
 
     public void Teleport(Vector3 position)

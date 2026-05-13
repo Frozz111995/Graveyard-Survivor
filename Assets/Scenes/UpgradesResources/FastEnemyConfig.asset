@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbb9e83f4861a34b8bf03735df3bc7d, type: 3}
+  m_Name: FastEnemyConfig
+  m_EditorClassIdentifier: 
+  maxHP: 20
+  moveSpeed: 6
+  contactDamage: 8
+  damageCooldown: 1
+  spawnWeight: 2
+  prefab: {fileID: 2871191470483429980, guid: 65abc57b808decc43959f6148376a9e3, type: 3}
+  initialPoolSize: 20
