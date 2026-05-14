@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Header("Ramp Up")]
+    [SerializeField] float startInterval = 3f;
+    [SerializeField] float rampDuration = 180f; // за 3 минуты выйти на spawnInterval
+    
     [SerializeField] float margin = 3f;
     [SerializeField] float spawnInterval = 1f;
 
@@ -72,19 +76,21 @@ public class EnemySpawner : MonoBehaviour
         int active = EnemyPool.Instance.ActiveCount;
         CapPhase phase = GetCurrentPhase();
 
-        // Hard cap — стоп
         if (active >= phase.hardCap)
             return -1f;
 
-        // Ниже soft cap — нормальный интервал
-        if (active <= phase.softCap)
-            return spawnInterval;
+        // плавное нарастание от startInterval до spawnInterval
+        float t = Mathf.Clamp01(Time.timeSinceLevelLoad / rampDuration);
+        float interval = Mathf.Lerp(startInterval, spawnInterval, t);
 
-        // Между soft и hard cap — плавное замедление
-        // t = 0 при softCap, t = 1 при hardCap
-        float t = (float)(active - phase.softCap) / (phase.hardCap - phase.softCap);
-        float multiplier = Mathf.Lerp(1f, maxSlowdownMultiplier, t);
-        return spawnInterval * multiplier;
+        // soft cap замедляет сверху
+        if (active > phase.softCap)
+        {
+            float slowT = (float)(active - phase.softCap) / (phase.hardCap - phase.softCap);
+            interval *= Mathf.Lerp(1f, maxSlowdownMultiplier, slowT);
+        }
+
+        return interval;
     }
 
     CapPhase GetCurrentPhase()
@@ -132,4 +138,23 @@ public class EnemySpawner : MonoBehaviour
         Vector3 camCenter = (c[0] + c[1] + c[2] + c[3]) / 4f;
         return pos + (pos - camCenter).normalized * margin;
     }
+    
+#if UNITY_EDITOR
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) DebugSpawn(0, false);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) DebugSpawn(1, false);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) DebugSpawn(2, false);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) DebugSpawn(0, true);
+        if (Input.GetKeyDown(KeyCode.Alpha5)) DebugSpawn(1, true);
+        if (Input.GetKeyDown(KeyCode.Alpha6)) DebugSpawn(2, true);
+    }
+
+    void DebugSpawn(int index, bool isElite)
+    {
+        var configs = EnemyPool.Instance.Configs;
+        if (index >= configs.Length) return;
+        EnemyPool.Instance.Get(GetSpawnPos(), _player, configs[index], isElite);
+    }
+#endif
 }

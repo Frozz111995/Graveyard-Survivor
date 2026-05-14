@@ -26,7 +26,8 @@ public class PlayerStats : MonoBehaviour
     public bool IsInvulnerable { get; private set; }
 
     public event Action OnDeath;
-    public event Action<float, float> OnHealthChanged; // current, max — для UI хп бара
+    public event Action<float, float> OnHealthChanged;
+    public event Action<float, float> OnDamaged; // только урон
 
     bool _isDead;
     float _lastHitTime = -999f;
@@ -58,6 +59,7 @@ public class PlayerStats : MonoBehaviour
 
         CurrentHP = Mathf.Max(0, CurrentHP - amount);
         OnHealthChanged?.Invoke(CurrentHP, maxHP);
+        OnDamaged?.Invoke(CurrentHP, maxHP);
 
         if (CurrentHP <= 0)
             Die();

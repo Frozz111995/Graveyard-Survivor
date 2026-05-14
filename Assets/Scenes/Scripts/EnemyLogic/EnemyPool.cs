@@ -1,19 +1,16 @@
-// EnemyPool.cs
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPool : MonoBehaviour
 {
     public static EnemyPool Instance { get; private set; }
-
+    public EnemyConfig[] Configs => configs;
     [SerializeField] EnemyConfig[] configs;
     [SerializeField] Transform enemiesRoot;
 
     Dictionary<EnemyConfig, Stack<EnemyAI>> _pools = new();
 
-    // ── Soft Cap: счётчик живых врагов ───────────────────────────────────────
     public int ActiveCount { get; private set; }
-    // ─────────────────────────────────────────────────────────────────────────
 
     void Awake()
     {
@@ -22,13 +19,8 @@ public class EnemyPool : MonoBehaviour
         foreach (var config in configs)
         {
             var stack = new Stack<EnemyAI>();
-
             for (int i = 0; i < config.initialPoolSize; i++)
-            {
-                var e = CreateEnemy(config);
-                stack.Push(e);
-            }
-
+                stack.Push(CreateEnemy(config));
             _pools[config] = stack;
         }
     }
@@ -38,7 +30,8 @@ public class EnemyPool : MonoBehaviour
         var stack = _pools[config];
         var e = stack.Count > 0 ? stack.Pop() : CreateEnemy(config);
 
-        e.transform.localScale = config.prefab.transform.localScale; // сброс scale
+        e.ResetVisuals();
+        e.transform.localScale = config.prefab.transform.localScale;
         e.gameObject.SetActive(true);
         e.Init(player, config);
         e.Teleport(position);
@@ -53,8 +46,7 @@ public class EnemyPool : MonoBehaviour
     {
         enemy.transform.position = Vector3.down * 1000f;
         enemy.gameObject.SetActive(false);
-
-        ActiveCount = Mathf.Max(0, ActiveCount - 1); // ← враг вернулся в пул
+        ActiveCount = Mathf.Max(0, ActiveCount - 1);
 
         foreach (var config in configs)
         {
@@ -64,13 +56,6 @@ public class EnemyPool : MonoBehaviour
                 return;
             }
         }
-    }
-
-    EnemyAI CreateEnemy(EnemyConfig config)
-    {
-        var e = Instantiate(config.prefab, Vector3.down * 1000f, Quaternion.identity, enemiesRoot);
-        e.gameObject.SetActive(false);
-        return e;
     }
 
     public (EnemyConfig config, bool isElite) GetRandomConfig()
@@ -96,13 +81,25 @@ public class EnemyPool : MonoBehaviour
         bool isElite = false;
         if (picked.canSpawnElite)
         {
-            float chance = Mathf.Clamp(
-                picked.eliteChanceBase + picked.eliteChancePerMinute * minutes,
-                0f, picked.eliteChanceMax
-            );
-            isElite = Random.value < chance;
+            float eliteUnlockTime = picked.unlockAfterSeconds + picked.eliteUnlockDelay;
+            if (elapsed >= eliteUnlockTime)
+            {
+                float minutesSinceEliteUnlock = (elapsed - eliteUnlockTime) / 60f;
+                float chance = Mathf.Clamp(
+                    picked.eliteChanceBase + picked.eliteChancePerMinute * minutesSinceEliteUnlock,
+                    0f, picked.eliteChanceMax
+                );
+                isElite = Random.value < chance;
+            }
         }
 
         return (picked, isElite);
+    }
+
+    EnemyAI CreateEnemy(EnemyConfig config)
+    {
+        var e = Instantiate(config.prefab, Vector3.down * 1000f, Quaternion.identity, enemiesRoot);
+        e.gameObject.SetActive(false);
+        return e;
     }
 }

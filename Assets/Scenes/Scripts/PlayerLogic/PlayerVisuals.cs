@@ -23,14 +23,14 @@ public class PlayerVisuals : MonoBehaviour
         _originalColor = _renderer.sharedMaterial.color;
 
         _stats = PlayerStats.Instance;
-        _stats.OnHealthChanged += HandleDamaged;
+        _stats.OnDamaged += HandleDamaged;
         _stats.OnDeath += HandleDeath;
     }
 
     void OnDestroy()
     {
         if (PlayerStats.Instance == null) return;
-        _stats.OnHealthChanged -= HandleDamaged;
+        _stats.OnDamaged -= HandleDamaged;
         _stats.OnDeath -= HandleDeath;
     }
 

@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2a61b7d42b9aa4d95b354920d3d15c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
 --- !u!114 &-6242144106020514866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b37ceaca3255e448aaddcb0bd43e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 20
 --- !u!114 &7110356199797414247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,5 +202,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebc75a9d5c83a54b89b0bdf6224c87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xpOrbPrefab: {fileID: 431111144458980041, guid: 80e26731a364cd94290b223f6c3b83c5,
-    type: 3}

@@ -27,6 +27,7 @@ MonoBehaviour:
   eliteHpMult: 3
   eliteSpeedMult: 1.5
   eliteSizeMult: 1.4
-  eliteMaterial: {fileID: 0}
-  eliteOnDeathFx: {fileID: 0}
+  eliteMaterial: {fileID: 2100000, guid: 8c18bb9b553b34142b7749a8963fdf00, type: 2}
+  eliteOnDeathFx: {fileID: 332507411106518682, guid: ee38c7d51e48dd34fbefd8e1e3ade517,
+    type: 3}
   eliteXpMult: 3

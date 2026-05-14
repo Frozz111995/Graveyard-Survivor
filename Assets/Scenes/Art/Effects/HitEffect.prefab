@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6584224753604373311}
   - component: {fileID: 7039486597184797982}
   m_Layer: 0
-  m_Name: DeathEffect
+  m_Name: HitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
-      maxColor: {r: 0.49803925, g: 0.49803925, b: 0.49411768, a: 1}
+      maxColor: {r: 0.9946809, g: 1, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4835,7 +4835,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
+  - {fileID: 2100000, guid: cb7e240b739950f4f865dfe8f9c8b7ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

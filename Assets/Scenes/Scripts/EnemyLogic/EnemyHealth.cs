@@ -8,13 +8,12 @@ public class EnemyHealth : MonoBehaviour
     float _currentHp;
     bool _isDead;
 
+    public float MaxHP => _maxHp;
+
     public event Action OnDeath;
     public event Action<float, float> OnDamaged; // current, max
 
     EnemyAI _ai;
-
-    public float MaxHP => _maxHp;
-    public float CurrentHP => _currentHp;
 
     void Awake()
     {
@@ -28,6 +27,12 @@ public class EnemyHealth : MonoBehaviour
         _isDead = false;
     }
 
+    public void SetMaxHP(float newMax)
+    {
+        _maxHp = newMax;
+        _currentHp = newMax;
+    }
+
     public void TakeDamage(float amount)
     {
         if (_isDead) return;
@@ -39,29 +44,15 @@ public class EnemyHealth : MonoBehaviour
             Die();
     }
 
-    public void SetMaxHP(float newMaxHP)
-    {
-        if (newMaxHP <= 0f)
-            newMaxHP = 1f;
-
-        float hpPercent = _maxHp > 0f ? _currentHp / _maxHp : 1f;
-
-        _maxHp = newMaxHP;
-        _currentHp = _maxHp * hpPercent;
-
-        if (_currentHp > _maxHp)
-            _currentHp = _maxHp;
-
-        if (_currentHp < 0f)
-            _currentHp = 0f;
-
-        OnDamaged?.Invoke(_currentHp, _maxHp);
-    }
-
     void Die()
     {
         _isDead = true;
         OnDeath?.Invoke();
+
+        var fx = _ai.GetEliteDeathFx();
+        if (fx != null)
+            Instantiate(fx, transform.position, Quaternion.identity);
+
         EnemyPool.Instance.Return(_ai);
     }
 }

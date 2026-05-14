@@ -6,7 +6,7 @@ public class ParticlePool : MonoBehaviour
 {
     public static ParticlePool Instance { get; private set; }
 
-    [SerializeField] int initialSizePerPrefab = 3;
+    //[SerializeField] int initialSizePerPrefab = 3;
 
     readonly Dictionary<ParticleSystem, Stack<ParticleSystem>> _pools = new();
 

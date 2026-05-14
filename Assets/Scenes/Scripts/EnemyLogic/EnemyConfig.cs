@@ -23,6 +23,7 @@ public class EnemyConfig : ScriptableObject
     public int initialPoolSize = 20;
     
     [Header("Elite")]
+    public float eliteUnlockDelay = 300f; // 5 минут после unlockAfterSeconds
     public bool canSpawnElite = true;
     public float eliteChanceBase = 0f;     // шанс до элитки (0 = недоступна)
     public float eliteChancePerMinute = 0.05f; // +5% каждую минуту после анлока
@@ -34,5 +35,4 @@ public class EnemyConfig : ScriptableObject
     public float eliteSizeMult = 1.4f;
     public Material eliteMaterial;         // фиолетовый/чёрный материал
     public GameObject eliteOnDeathFx;      // взрыв при смерти
-    public float eliteXpMult = 3f;
 }

@@ -71,6 +71,12 @@ public class EnemyVisuals : MonoBehaviour
         _block.SetColor(ColorProp, color);
         _renderer.SetPropertyBlock(_block);
     }
+    
+    public void SetBaseColor(Color color)
+    {
+        _originalColor = color;
+        ResetColor();
+    }
 
     void ResetColor()
     {
