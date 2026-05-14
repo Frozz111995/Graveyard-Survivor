@@ -1,6 +1,7 @@
 // PlayerAttack.cs
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -21,26 +22,39 @@ public class PlayerAttack : MonoBehaviour
         var enemy = FindClosestEnemy();
         if (enemy == null) return;
 
-        Vector3 direction = enemy.position - transform.position;
-        StartCoroutine(FireBurst(direction));
+        Vector3 origin = transform.position + Vector3.up * 0.5f; // примерно центр игрока
+        Vector3 direction = PredictPosition(enemy, origin, 10f) - origin;
+        direction += new Vector3(
+            Random.Range(-0.1f, 0.1f),
+            0f,
+            Random.Range(-0.1f, 0.1f)
+        );
+        StartCoroutine(FireBurst(origin, direction));
         _cooldownTimer = PlayerStats.Instance.attackCooldown;
     }
+    
+    Vector3 PredictPosition(EnemyAI enemy, Vector3 origin, float projectileSpeed)
+    {
+        float distance = Vector3.Distance(origin, enemy.transform.position);
+        float timeToReach = distance / projectileSpeed;
+        return enemy.transform.position + enemy.Velocity * timeToReach;
+    }
 
-    IEnumerator FireBurst(Vector3 direction)
+    IEnumerator FireBurst(Vector3 origin, Vector3 direction)
     {
         for (int i = 0; i < PlayerStats.Instance.projectileCount; i++)
         {
             if (Time.timeScale == 0) yield break;
-            ProjectilePool.Instance.Get(transform.position, direction);
+            ProjectilePool.Instance.Get(origin, direction);
             yield return new WaitForSecondsRealtime(PlayerStats.Instance.burstInterval);
         }
     }
 
-    Transform FindClosestEnemy()
+    EnemyAI FindClosestEnemy()
     {
         var hits = Physics.OverlapSphere(transform.position, attackRadius, enemyLayer);
 
-        Transform closest = null;
+        EnemyAI closest = null;
         float closestDist = float.MaxValue;
 
         foreach (var hit in hits)
@@ -49,7 +63,7 @@ public class PlayerAttack : MonoBehaviour
             if (dist < closestDist)
             {
                 closestDist = dist;
-                closest = hit.transform;
+                closest = hit.GetComponent<EnemyAI>();
             }
         }
 

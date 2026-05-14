@@ -13,6 +13,9 @@ public class EnemyHealth : MonoBehaviour
 
     EnemyAI _ai;
 
+    public float MaxHP => _maxHp;
+    public float CurrentHP => _currentHp;
+
     void Awake()
     {
         _ai = GetComponent<EnemyAI>();
@@ -34,6 +37,25 @@ public class EnemyHealth : MonoBehaviour
 
         if (_currentHp <= 0)
             Die();
+    }
+
+    public void SetMaxHP(float newMaxHP)
+    {
+        if (newMaxHP <= 0f)
+            newMaxHP = 1f;
+
+        float hpPercent = _maxHp > 0f ? _currentHp / _maxHp : 1f;
+
+        _maxHp = newMaxHP;
+        _currentHp = _maxHp * hpPercent;
+
+        if (_currentHp > _maxHp)
+            _currentHp = _maxHp;
+
+        if (_currentHp < 0f)
+            _currentHp = 0f;
+
+        OnDamaged?.Invoke(_currentHp, _maxHp);
     }
 
     void Die()

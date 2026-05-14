@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
 
     EnemyHealth _health;
 
+    public Vector3 Velocity => (_player.position - transform.position).normalized * _moveSpeed;
     void Awake()
     {
         _cc = GetComponent<CharacterController>();
@@ -66,5 +67,15 @@ public class EnemyAI : MonoBehaviour
         transform.position = position;
         _cc.enabled = true;
         _velocityY = 0f;
+    }
+    
+    public void ApplyElite(EnemyConfig config)
+    {
+        _moveSpeed *= config.eliteSpeedMult;
+        _health.SetMaxHP(_health.MaxHP * config.eliteHpMult);
+        transform.localScale *= config.eliteSizeMult;
+
+        if (config.eliteMaterial != null)
+            GetComponentInChildren<Renderer>().material = config.eliteMaterial;
     }
 }

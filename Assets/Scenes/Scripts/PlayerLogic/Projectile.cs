@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
 
     public void Init(Vector3 direction)
     {
-        _direction = direction.normalized;
+        _direction = new Vector3(direction.x, Mathf.Min(direction.y, 0f), direction.z).normalized;
     }
 
     void Update()

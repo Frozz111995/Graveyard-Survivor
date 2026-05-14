@@ -93,6 +93,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   margin: 5
   spawnInterval: 1
+  capPhases:
+  - untilMinutes: 5
+    softCap: 60
+    hardCap: 80
+  - untilMinutes: 10
+    softCap: 90
+    hardCap: 120
+  - untilMinutes: 999
+    softCap: 130
+    hardCap: 160
+  maxSlowdownMultiplier: 5
 --- !u!1 &5894049620850972542
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseXP: 100
-  scaling: 1.5
+  growthXP: 30
 --- !u!1 &7925700889897183133
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,9 +449,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d86d03d010cf44c82a54d694f99980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2871191470483429980, guid: 420ad935a704baa4d8f94e180215da3c, type: 3}
+  configs:
+  - {fileID: 11400000, guid: a889c7367ed8d3f4792bdfea361b0d12, type: 2}
+  - {fileID: 11400000, guid: 400cbfeda02c37946b2b2d23eaefeb2c, type: 2}
+  - {fileID: 11400000, guid: b95bcae657c01884f96d8864e7a499bc, type: 2}
   enemiesRoot: {fileID: 0}
-  initialSize: 20
 --- !u!114 &8581998482874907116
 MonoBehaviour:
   m_ObjectHideFlags: 0

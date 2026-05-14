@@ -7,6 +7,30 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float margin = 3f;
     [SerializeField] float spawnInterval = 1f;
 
+    // ── Dynamic Soft Cap ──────────────────────────────────────────────────────
+    [System.Serializable]
+    public struct CapPhase
+    {
+        [Tooltip("До скольких минут действует эта фаза")]
+        public float untilMinutes;
+        [Tooltip("Soft cap: выше него спавн начинает замедляться")]
+        public int softCap;
+        [Tooltip("Hard cap: выше него спавн полностью останавливается")]
+        public int hardCap;
+    }
+
+    [Header("Soft Cap Phases")]
+    [SerializeField] CapPhase[] capPhases = new CapPhase[]
+    {
+        new CapPhase { untilMinutes = 5f,  softCap = 60,  hardCap = 80  },
+        new CapPhase { untilMinutes = 10f, softCap = 90,  hardCap = 120 },
+        new CapPhase { untilMinutes = 999f, softCap = 130, hardCap = 160 },
+    };
+
+    [Tooltip("Максимальное замедление интервала спавна (множитель) при подходе к hard cap")]
+    [SerializeField] float maxSlowdownMultiplier = 5f;
+    // ─────────────────────────────────────────────────────────────────────────
+
     Transform _player;
     Camera _cam;
     bool _started;
@@ -27,15 +51,59 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
+            float interval = GetCurrentInterval();
+
+            // Hard cap достигнут — ждём не спавня
+            if (interval < 0f)
+            {
+                yield return new WaitForSeconds(0.5f);
+                continue;
+            }
+
             SpawnEnemy();
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(interval);
         }
+    }
+
+    // Возвращает текущий интервал спавна с учётом soft/hard cap.
+    // Возвращает -1 если hard cap достигнут (спавн заблокирован).
+    float GetCurrentInterval()
+    {
+        int active = EnemyPool.Instance.ActiveCount;
+        CapPhase phase = GetCurrentPhase();
+
+        // Hard cap — стоп
+        if (active >= phase.hardCap)
+            return -1f;
+
+        // Ниже soft cap — нормальный интервал
+        if (active <= phase.softCap)
+            return spawnInterval;
+
+        // Между soft и hard cap — плавное замедление
+        // t = 0 при softCap, t = 1 при hardCap
+        float t = (float)(active - phase.softCap) / (phase.hardCap - phase.softCap);
+        float multiplier = Mathf.Lerp(1f, maxSlowdownMultiplier, t);
+        return spawnInterval * multiplier;
+    }
+
+    CapPhase GetCurrentPhase()
+    {
+        float minutes = Time.time / 60f;
+
+        foreach (var phase in capPhases)
+        {
+            if (minutes < phase.untilMinutes)
+                return phase;
+        }
+
+        return capPhases[capPhases.Length - 1];
     }
 
     void SpawnEnemy()
     {
-        var config = EnemyPool.Instance.GetRandomConfig();
-        EnemyPool.Instance.Get(GetSpawnPos(), _player, config);
+        var (config, isElite) = EnemyPool.Instance.GetRandomConfig();
+        EnemyPool.Instance.Get(GetSpawnPos(), _player, config, isElite);
     }
 
     Vector3 GetSpawnPos()

@@ -26,9 +26,10 @@ public class ProjectilePool : MonoBehaviour
     {
         var p = _inactive.Count > 0
             ? _inactive.Pop()
-            : Instantiate(prefab); // пул кончился — создаём новый
+            : Instantiate(prefab);
 
         p.transform.position = position;
+        p.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90f, 0f, 0f); // <--
         p.gameObject.SetActive(true);
         p.Init(direction);
         return p;

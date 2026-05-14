@@ -16,6 +16,17 @@ MonoBehaviour:
   moveSpeed: 6
   contactDamage: 8
   damageCooldown: 1
+  unlockAfterSeconds: 120
   spawnWeight: 2
   prefab: {fileID: 2871191470483429980, guid: 65abc57b808decc43959f6148376a9e3, type: 3}
   initialPoolSize: 20
+  canSpawnElite: 1
+  eliteChanceBase: 0
+  eliteChancePerMinute: 0.05
+  eliteChanceMax: 0.4
+  eliteHpMult: 3
+  eliteSpeedMult: 1.5
+  eliteSizeMult: 1.4
+  eliteMaterial: {fileID: 0}
+  eliteOnDeathFx: {fileID: 0}
+  eliteXpMult: 3

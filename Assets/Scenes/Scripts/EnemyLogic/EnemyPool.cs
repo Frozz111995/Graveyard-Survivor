@@ -9,8 +9,11 @@ public class EnemyPool : MonoBehaviour
     [SerializeField] EnemyConfig[] configs;
     [SerializeField] Transform enemiesRoot;
 
-    // отдельный стек на каждый конфиг
     Dictionary<EnemyConfig, Stack<EnemyAI>> _pools = new();
+
+    // ── Soft Cap: счётчик живых врагов ───────────────────────────────────────
+    public int ActiveCount { get; private set; }
+    // ─────────────────────────────────────────────────────────────────────────
 
     void Awake()
     {
@@ -30,17 +33,19 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    public EnemyAI Get(Vector3 position, Transform player, EnemyConfig config)
+    public EnemyAI Get(Vector3 position, Transform player, EnemyConfig config, bool isElite = false)
     {
         var stack = _pools[config];
+        var e = stack.Count > 0 ? stack.Pop() : CreateEnemy(config);
 
-        var e = stack.Count > 0
-            ? stack.Pop()
-            : CreateEnemy(config);
-
+        e.transform.localScale = config.prefab.transform.localScale; // сброс scale
         e.gameObject.SetActive(true);
         e.Init(player, config);
         e.Teleport(position);
+
+        if (isElite) e.ApplyElite(config);
+
+        ActiveCount++;
         return e;
     }
 
@@ -49,7 +54,8 @@ public class EnemyPool : MonoBehaviour
         enemy.transform.position = Vector3.down * 1000f;
         enemy.gameObject.SetActive(false);
 
-        // находим конфиг по префабу
+        ActiveCount = Mathf.Max(0, ActiveCount - 1); // ← враг вернулся в пул
+
         foreach (var config in configs)
         {
             if (enemy.gameObject.name.StartsWith(config.prefab.name))
@@ -67,21 +73,36 @@ public class EnemyPool : MonoBehaviour
         return e;
     }
 
-    // удобный метод для спавнера — вернуть случайный конфиг по весам
-    public EnemyConfig GetRandomConfig()
+    public (EnemyConfig config, bool isElite) GetRandomConfig()
     {
+        float elapsed = Time.timeSinceLevelLoad;
+        float minutes = elapsed / 60f;
+
         float total = 0f;
-        foreach (var c in configs) total += c.spawnWeight;
+        foreach (var c in configs)
+            if (elapsed >= c.unlockAfterSeconds) total += c.spawnWeight;
 
         float roll = Random.Range(0f, total);
         float cumulative = 0f;
+        EnemyConfig picked = configs[0];
 
         foreach (var c in configs)
         {
+            if (elapsed < c.unlockAfterSeconds) continue;
             cumulative += c.spawnWeight;
-            if (roll <= cumulative) return c;
+            if (roll <= cumulative) { picked = c; break; }
         }
 
-        return configs[0];
+        bool isElite = false;
+        if (picked.canSpawnElite)
+        {
+            float chance = Mathf.Clamp(
+                picked.eliteChanceBase + picked.eliteChancePerMinute * minutes,
+                0f, picked.eliteChanceMax
+            );
+            isElite = Random.value < chance;
+        }
+
+        return (picked, isElite);
     }
 }
