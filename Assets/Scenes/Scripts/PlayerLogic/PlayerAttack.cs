@@ -23,14 +23,7 @@ public class PlayerAttack : MonoBehaviour
         var enemy = FindClosestEnemy();
         if (enemy == null) return;
 
-        Vector3 origin = transform.position + Vector3.up * 0.5f;
-        Vector3 direction = PredictPosition(enemy, origin, 10f) - origin;
-        direction += new Vector3(
-            Random.Range(-0.1f, 0.1f),
-            0f,
-            Random.Range(-0.1f, 0.1f)
-        );
-        StartCoroutine(FireBurst(direction));
+        StartCoroutine(FireBurst());
         _cooldownTimer = PlayerStats.Instance.attackCooldown;
     }
 
@@ -42,14 +35,34 @@ public class PlayerAttack : MonoBehaviour
         return enemyCenter + enemy.Velocity * timeToReach;
     }
 
-    IEnumerator FireBurst(Vector3 direction)
+    IEnumerator FireBurst()
     {
         for (int i = 0; i < PlayerStats.Instance.projectileCount; i++)
         {
             if (Time.timeScale == 0) yield break;
             if (_currentTarget == null) yield break;
 
-            Vector3 origin = transform.position + Vector3.up * 0.5f;
+            Vector3 diff = _currentTarget.transform.position - transform.position;
+            diff.y = 0f;
+            bool isOnTop = diff.magnitude < 0.2f;
+
+            Vector3 origin = isOnTop
+                ? _currentTarget.transform.position + Vector3.up * 0.5f
+                : transform.position + Vector3.up * 0.5f;
+
+            Vector3 direction = isOnTop
+                ? Vector3.down
+                : PredictPosition(_currentTarget, origin, 10f) - origin;
+
+            if (!isOnTop)
+            {
+                direction += new Vector3(
+                    Random.Range(-0.1f, 0.1f),
+                    0f,
+                    Random.Range(-0.1f, 0.1f)
+                );
+            }
+
             ProjectilePool.Instance.Get(origin, direction);
             yield return new WaitForSecondsRealtime(PlayerStats.Instance.burstInterval);
         }

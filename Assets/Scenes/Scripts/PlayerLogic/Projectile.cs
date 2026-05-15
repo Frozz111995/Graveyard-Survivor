@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
 
     public void Init(Vector3 direction)
     {
-        _direction = new Vector3(direction.x, Mathf.Min(direction.y, 0f), direction.z).normalized;
+        _direction = direction.normalized;
     }
 
     void Update()
@@ -31,6 +31,7 @@ public class Projectile : MonoBehaviour
         if (IsOutOfBounds(transform.position))
             ReturnToPool();
     }
+    
 
     void OnTriggerEnter(Collider other)
     {
