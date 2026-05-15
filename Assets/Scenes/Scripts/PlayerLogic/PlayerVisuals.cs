@@ -1,4 +1,3 @@
-// PlayerVisuals.cs
 using System.Collections;
 using UnityEngine;
 
@@ -8,17 +7,24 @@ public class PlayerVisuals : MonoBehaviour
     [SerializeField] Color flashColor = Color.red;
     [SerializeField] AudioClip[] hitSounds;
     [SerializeField] AudioClip[] deathSounds;
-
-    static readonly int ColorProp = Shader.PropertyToID("_BaseColor");
+    [SerializeField] float attackRotationLock = 1f; // подбери под длину анимации
+    static readonly int ColorProp  = Shader.PropertyToID("_BaseColor");
+    static readonly int AnimRun    = Animator.StringToHash("Run");
+    static readonly int AnimAttack = Animator.StringToHash("Attack");
+    static readonly int AnimDeath  = Animator.StringToHash("Death");
 
     Renderer _renderer;
     MaterialPropertyBlock _block;
     Color _originalColor;
     PlayerStats _stats;
+    Animator _animator;
+
+    public bool IsAttacking { get; private set; }
 
     void Awake()
     {
-        _renderer = GetComponent<Renderer>();
+        _renderer = GetComponentInChildren<Renderer>();
+        _animator = GetComponentInChildren<Animator>();
         _block = new MaterialPropertyBlock();
         _originalColor = _renderer.sharedMaterial.color;
 
@@ -34,6 +40,21 @@ public class PlayerVisuals : MonoBehaviour
         _stats.OnDeath -= HandleDeath;
     }
 
+    public void SetRun(bool isRunning) => _animator?.SetBool(AnimRun, isRunning);
+
+    public void SetAttack()
+    {
+        IsAttacking = true;
+        _animator?.SetTrigger(AnimAttack);
+        StartCoroutine(ResetAttacking());
+    }
+
+    IEnumerator ResetAttacking()
+    {
+        yield return new WaitForSeconds(attackRotationLock);
+        IsAttacking = false;
+    }
+
     void HandleDamaged(float current, float max)
     {
         AudioPool.Instance.Play(GetRandom(hitSounds), transform.position);
@@ -46,6 +67,8 @@ public class PlayerVisuals : MonoBehaviour
     void HandleDeath()
     {
         AudioPool.Instance.Play(GetRandom(deathSounds), transform.position);
+        _animator?.SetBool(AnimRun, false);
+        _animator?.SetBool(AnimDeath, true);
     }
 
     IEnumerator Flash()

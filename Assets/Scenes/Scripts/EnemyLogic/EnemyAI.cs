@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
@@ -9,6 +10,7 @@ public class EnemyAI : MonoBehaviour
     float _lastDamageTime = -999f;
     float _eliteXpMult = 1f;
     bool _isElite;
+    bool _isDead;
     GameObject _eliteOnDeathFx;
 
     Transform _player;
@@ -16,6 +18,11 @@ public class EnemyAI : MonoBehaviour
     EnemyHealth _health;
     Renderer _renderer;
     Material _originalMaterial;
+    Animator _animator;
+
+    static readonly int AnimRun    = Animator.StringToHash("Run");
+    static readonly int AnimAttack = Animator.StringToHash("Attack");
+    static readonly int AnimDeath  = Animator.StringToHash("Death");
 
     public EnemyConfig Config { get; private set; }
     public bool IsElite => _isElite;
@@ -29,6 +36,14 @@ public class EnemyAI : MonoBehaviour
         _health = GetComponent<EnemyHealth>();
         _renderer = GetComponent<Renderer>();
         _originalMaterial = _renderer.material;
+        _animator = GetComponentInChildren<Animator>();
+
+        _health.OnDeath += HandleDeath;
+    }
+
+    void OnDestroy()
+    {
+        _health.OnDeath -= HandleDeath;
     }
 
     public void Init(Transform player, EnemyConfig config)
@@ -38,7 +53,20 @@ public class EnemyAI : MonoBehaviour
         _moveSpeed = config.moveSpeed;
         _contactDamage = config.contactDamage;
         _damageCooldown = config.damageCooldown;
+        _isDead = false;
         _health.Init(config.maxHP);
+
+        _animator?.SetBool(AnimAttack, false);
+        _animator?.SetBool(AnimDeath, false);
+    }
+
+    void HandleDeath()
+    {
+        _isDead = true;
+        StopAllCoroutines();
+        _animator?.SetBool(AnimRun, false);
+        _animator?.SetBool(AnimAttack, false);
+        _animator?.SetBool(AnimDeath, true);
     }
 
     public void ApplyElite(EnemyConfig config)
@@ -68,12 +96,15 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (_player == null) return;
+        if (_player == null || _isDead) return;
 
         Vector3 diff = _player.position - transform.position;
         diff.y = 0f;
         Vector3 direction = diff.normalized;
+        float distanceToPlayer = diff.magnitude;
+        bool isMoving = distanceToPlayer > _cc.radius + 0.1f;
 
+        _animator?.SetBool(AnimRun, isMoving);
         if (_cc.isGrounded) _velocityY = 0f;
         else _velocityY += Physics.gravity.y * Time.deltaTime;
 
@@ -85,11 +116,21 @@ public class EnemyAI : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (_isDead) return;
         if (!hit.gameObject.CompareTag("Player")) return;
         if (Time.time - _lastDamageTime < _damageCooldown) return;
 
         _lastDamageTime = Time.time;
+        _animator?.SetBool(AnimAttack, true);
         PlayerStats.Instance.TakeDamage(_contactDamage);
+
+        StartCoroutine(ResetAttack());
+    }
+
+    IEnumerator ResetAttack()
+    {
+        yield return new WaitForSeconds(_damageCooldown);
+        _animator?.SetBool(AnimAttack, false);
     }
 
     public void Teleport(Vector3 position)
@@ -98,5 +139,6 @@ public class EnemyAI : MonoBehaviour
         transform.position = position;
         _cc.enabled = true;
         _velocityY = 0f;
+        _isDead = false;
     }
 }

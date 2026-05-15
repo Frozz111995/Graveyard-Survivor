@@ -1,19 +1,24 @@
-// PlayerAttack.cs
 using System.Collections;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float attackCooldown = 1f;
-    public int projectileCount = 1;
-    public float burstInterval = 0.1f;
-
     EnemyAI _currentTarget;
 
     [SerializeField] LayerMask enemyLayer;
     [SerializeField] float attackRadius = 10f;
 
     float _cooldownTimer;
+    PlayerVisuals _visuals;
+    PlayerMovement _movement;
+    Transform _root;
+
+    void Start()
+    {
+        _visuals = transform.root.GetComponentInChildren<PlayerVisuals>();
+        _movement = transform.root.GetComponentInChildren<PlayerMovement>();
+        _root = _visuals.transform;
+    }
 
     void Update()
     {
@@ -37,6 +42,11 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator FireBurst()
     {
+        _visuals?.SetAttack();
+        _movement?.LockRotation(PlayerStats.Instance.attackCooldown);
+
+        StartCoroutine(TrackTarget());
+
         for (int i = 0; i < PlayerStats.Instance.projectileCount; i++)
         {
             if (Time.timeScale == 0) yield break;
@@ -56,8 +66,7 @@ public class PlayerAttack : MonoBehaviour
                 : isClose
                     ? Vector3.down
                     : PredictPosition(_currentTarget, origin, 10f) - origin;
-            
-            
+
             if (!isOnTop)
             {
                 direction += new Vector3(
@@ -66,8 +75,26 @@ public class PlayerAttack : MonoBehaviour
                     Random.Range(-0.1f, 0.1f)
                 );
             }
+
             ProjectilePool.Instance.Get(origin, direction);
             yield return new WaitForSecondsRealtime(PlayerStats.Instance.burstInterval);
+        }
+    }
+
+    IEnumerator TrackTarget()
+    {
+        float timer = PlayerStats.Instance.attackCooldown;
+        while (timer > 0f)
+        {
+            if (_currentTarget != null)
+            {
+                Vector3 lookDir = _currentTarget.transform.position - _root.position;
+                lookDir.y = 0f;
+                if (lookDir.sqrMagnitude > 0.01f)
+                    _root.rotation = Quaternion.Slerp(_root.rotation, Quaternion.LookRotation(lookDir.normalized), 15f * Time.deltaTime);
+            }
+            timer -= Time.deltaTime;
+            yield return null;
         }
     }
 

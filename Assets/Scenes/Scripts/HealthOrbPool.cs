@@ -27,8 +27,9 @@ public class HealthOrbPool : MonoBehaviour
     {
         var orb = _inactive.Count > 0
             ? _inactive.Pop()
-            : Instantiate(prefab, orbsRoot);
+            : Instantiate(prefab, position, Quaternion.identity, orbsRoot);
 
+        orb.gameObject.SetActive(false);
         orb.transform.position = position;
         orb.gameObject.SetActive(true);
         return orb;
