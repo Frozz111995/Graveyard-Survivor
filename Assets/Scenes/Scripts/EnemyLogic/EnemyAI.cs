@@ -16,8 +16,7 @@ public class EnemyAI : MonoBehaviour
     Transform _player;
     CharacterController _cc;
     EnemyHealth _health;
-    Renderer _renderer;
-    Material _originalMaterial;
+    EnemyVisuals _visuals;
     Animator _animator;
 
     static readonly int AnimRun    = Animator.StringToHash("Run");
@@ -34,8 +33,7 @@ public class EnemyAI : MonoBehaviour
     {
         _cc = GetComponent<CharacterController>();
         _health = GetComponent<EnemyHealth>();
-        _renderer = GetComponent<Renderer>();
-        _originalMaterial = _renderer.material;
+        _visuals = GetComponent<EnemyVisuals>();
         _animator = GetComponentInChildren<Animator>();
 
         _health.OnDeath += HandleDeath;
@@ -79,10 +77,7 @@ public class EnemyAI : MonoBehaviour
         transform.localScale *= config.eliteSizeMult;
 
         if (config.eliteMaterial != null)
-        {
-            _renderer.material = config.eliteMaterial;
-            GetComponent<EnemyVisuals>().SetBaseColor(config.eliteMaterial.color);
-        }
+            _visuals.SetBaseColor(config.eliteMaterial.color);
     }
 
     public void ResetVisuals()
@@ -90,8 +85,7 @@ public class EnemyAI : MonoBehaviour
         _isElite = false;
         _eliteOnDeathFx = null;
         _eliteXpMult = 1f;
-        _renderer.material = _originalMaterial;
-        GetComponent<EnemyVisuals>().SetBaseColor(_originalMaterial.color);
+        _visuals.ResetOriginalColors();
     }
 
     void Update()
@@ -105,6 +99,7 @@ public class EnemyAI : MonoBehaviour
         bool isMoving = distanceToPlayer > _cc.radius + 0.1f;
 
         _animator?.SetBool(AnimRun, isMoving);
+
         if (_cc.isGrounded) _velocityY = 0f;
         else _velocityY += Physics.gravity.y * Time.deltaTime;
 
