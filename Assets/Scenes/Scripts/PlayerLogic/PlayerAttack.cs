@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
 
     Vector3 PredictPosition(EnemyAI enemy, Vector3 origin, float projectileSpeed)
     {
-        Vector3 enemyCenter = enemy.transform.position;
+        Vector3 enemyCenter = enemy.GetComponent<Collider>().bounds.center;
         float distance = Vector3.Distance(origin, enemyCenter);
         float timeToReach = distance / projectileSpeed;
         return enemyCenter + enemy.Velocity * timeToReach;
@@ -45,24 +45,27 @@ public class PlayerAttack : MonoBehaviour
             Vector3 diff = _currentTarget.transform.position - transform.position;
             diff.y = 0f;
             bool isOnTop = diff.magnitude < 0.2f;
+            bool isClose = diff.magnitude < 1.5f;
 
-            Vector3 origin = isOnTop
-                ? _currentTarget.transform.position + Vector3.up * 0.5f
+            Vector3 origin = (isOnTop || isClose)
+                ? _currentTarget.GetComponent<Collider>().bounds.center
                 : transform.position + Vector3.up * 0.5f;
 
             Vector3 direction = isOnTop
                 ? Vector3.down
-                : PredictPosition(_currentTarget, origin, 10f) - origin;
-
+                : isClose
+                    ? Vector3.down
+                    : PredictPosition(_currentTarget, origin, 10f) - origin;
+            
+            
             if (!isOnTop)
             {
                 direction += new Vector3(
                     Random.Range(-0.1f, 0.1f),
-                    0f,
+                    0.1f,
                     Random.Range(-0.1f, 0.1f)
                 );
             }
-
             ProjectilePool.Instance.Get(origin, direction);
             yield return new WaitForSecondsRealtime(PlayerStats.Instance.burstInterval);
         }
