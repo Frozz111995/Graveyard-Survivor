@@ -38,10 +38,6 @@ public class PlayerAttack : MonoBehaviour
     {
         Vector3 enemyCenter = enemy.transform.position;
         float distance = Vector3.Distance(origin, enemyCenter);
-
-        if (distance < 3f)
-            return enemyCenter;
-
         float timeToReach = distance / projectileSpeed;
         return enemyCenter + enemy.Velocity * timeToReach;
     }
@@ -61,13 +57,6 @@ public class PlayerAttack : MonoBehaviour
 
     EnemyAI FindClosestEnemy()
     {
-        if (_currentTarget != null)
-        {
-            float dist = Vector3.Distance(transform.position, _currentTarget.transform.position);
-            if (dist <= attackRadius)
-                return _currentTarget;
-        }
-
         var hits = Physics.OverlapSphere(transform.position, attackRadius, enemyLayer);
 
         EnemyAI closest = null;
