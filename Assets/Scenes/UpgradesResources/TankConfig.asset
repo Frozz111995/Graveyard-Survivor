@@ -20,6 +20,8 @@ MonoBehaviour:
   spawnWeight: 1
   prefab: {fileID: 2871191470483429980, guid: fdbb46d40059be3488f0bbbb3e1171e4, type: 3}
   initialPoolSize: 20
+  xpOrbCount: 1
+  xpPerOrb: 30
   eliteUnlockDelay: 300
   canSpawnElite: 1
   eliteChanceBase: 0
@@ -28,6 +30,7 @@ MonoBehaviour:
   eliteHpMult: 3
   eliteSpeedMult: 1.5
   eliteSizeMult: 1.4
+  eliteXpMult: 4
   eliteMaterial: {fileID: 2100000, guid: 4b709ad397bb219409755576302c7f25, type: 2}
   eliteOnDeathFx: {fileID: 332507411106518682, guid: ee38c7d51e48dd34fbefd8e1e3ade517,
     type: 3}

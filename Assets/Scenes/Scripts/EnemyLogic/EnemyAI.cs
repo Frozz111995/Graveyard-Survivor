@@ -5,18 +5,23 @@ public class EnemyAI : MonoBehaviour
     float _moveSpeed;
     float _contactDamage;
     float _damageCooldown;
+    float _velocityY;
+    float _lastDamageTime = -999f;
+    float _eliteXpMult = 1f;
+    bool _isElite;
+    GameObject _eliteOnDeathFx;
 
     Transform _player;
     CharacterController _cc;
-    float _velocityY;
-    float _lastDamageTime = -999f;
-    bool _isElite;
-    GameObject _eliteOnDeathFx;
     EnemyHealth _health;
     Renderer _renderer;
     Material _originalMaterial;
-    public GameObject GetEliteDeathFx() => _eliteOnDeathFx;
+
+    public EnemyConfig Config { get; private set; }
+    public bool IsElite => _isElite;
+    public float XpMult => _eliteXpMult;
     public Vector3 Velocity => (_player.position - transform.position).normalized * _moveSpeed;
+    public GameObject GetEliteDeathFx() => _eliteOnDeathFx;
 
     void Awake()
     {
@@ -28,6 +33,7 @@ public class EnemyAI : MonoBehaviour
 
     public void Init(Transform player, EnemyConfig config)
     {
+        Config = config;
         _player = player;
         _moveSpeed = config.moveSpeed;
         _contactDamage = config.contactDamage;
@@ -39,6 +45,7 @@ public class EnemyAI : MonoBehaviour
     {
         _isElite = true;
         _eliteOnDeathFx = config.eliteOnDeathFx;
+        _eliteXpMult = config.eliteXpMult;
         _moveSpeed *= config.eliteSpeedMult;
         _health.SetMaxHP(_health.MaxHP * config.eliteHpMult);
         transform.localScale *= config.eliteSizeMult;
@@ -54,6 +61,7 @@ public class EnemyAI : MonoBehaviour
     {
         _isElite = false;
         _eliteOnDeathFx = null;
+        _eliteXpMult = 1f;
         _renderer.material = _originalMaterial;
         GetComponent<EnemyVisuals>().SetBaseColor(_originalMaterial.color);
     }

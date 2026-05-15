@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class XPOrbPool : MonoBehaviour
+public class HealthOrbPool : MonoBehaviour
 {
-    public static XPOrbPool Instance { get; private set; }
+    public static HealthOrbPool Instance { get; private set; }
 
-    [SerializeField] XPOrb prefab;
+    [SerializeField] HealthOrb prefab;
     [SerializeField] Transform orbsRoot;
-    [SerializeField] int initialSize = 30;
+    [SerializeField] int initialSize = 10;
 
-    readonly Stack<XPOrb> _inactive = new();
+    readonly Stack<HealthOrb> _inactive = new();
 
     void Awake()
     {
@@ -23,7 +23,7 @@ public class XPOrbPool : MonoBehaviour
         }
     }
 
-    public XPOrb Get(Vector3 position, float xpAmount)
+    public HealthOrb Get(Vector3 position)
     {
         var orb = _inactive.Count > 0
             ? _inactive.Pop()
@@ -31,11 +31,10 @@ public class XPOrbPool : MonoBehaviour
 
         orb.transform.position = position;
         orb.gameObject.SetActive(true);
-        orb.Init(xpAmount);
         return orb;
     }
 
-    public void Return(XPOrb orb)
+    public void Return(HealthOrb orb)
     {
         orb.gameObject.SetActive(false);
         _inactive.Push(orb);

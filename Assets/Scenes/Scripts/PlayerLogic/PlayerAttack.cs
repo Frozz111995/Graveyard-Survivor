@@ -1,13 +1,14 @@
 // PlayerAttack.cs
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class PlayerAttack : MonoBehaviour
 {
     public float attackCooldown = 1f;
     public int projectileCount = 1;
     public float burstInterval = 0.1f;
+
+    EnemyAI _currentTarget;
 
     [SerializeField] LayerMask enemyLayer;
     [SerializeField] float attackRadius = 10f;
@@ -22,29 +23,37 @@ public class PlayerAttack : MonoBehaviour
         var enemy = FindClosestEnemy();
         if (enemy == null) return;
 
-        Vector3 origin = transform.position + Vector3.up * 0.5f; // примерно центр игрока
+        Vector3 origin = transform.position + Vector3.up * 0.5f;
         Vector3 direction = PredictPosition(enemy, origin, 10f) - origin;
         direction += new Vector3(
             Random.Range(-0.1f, 0.1f),
             0f,
             Random.Range(-0.1f, 0.1f)
         );
-        StartCoroutine(FireBurst(origin, direction));
+        StartCoroutine(FireBurst(direction));
         _cooldownTimer = PlayerStats.Instance.attackCooldown;
     }
-    
+
     Vector3 PredictPosition(EnemyAI enemy, Vector3 origin, float projectileSpeed)
     {
-        float distance = Vector3.Distance(origin, enemy.transform.position);
+        Vector3 enemyCenter = enemy.transform.position;
+        float distance = Vector3.Distance(origin, enemyCenter);
+
+        if (distance < 3f)
+            return enemyCenter;
+
         float timeToReach = distance / projectileSpeed;
-        return enemy.transform.position + enemy.Velocity * timeToReach;
+        return enemyCenter + enemy.Velocity * timeToReach;
     }
 
-    IEnumerator FireBurst(Vector3 origin, Vector3 direction)
+    IEnumerator FireBurst(Vector3 direction)
     {
         for (int i = 0; i < PlayerStats.Instance.projectileCount; i++)
         {
             if (Time.timeScale == 0) yield break;
+            if (_currentTarget == null) yield break;
+
+            Vector3 origin = transform.position + Vector3.up * 0.5f;
             ProjectilePool.Instance.Get(origin, direction);
             yield return new WaitForSecondsRealtime(PlayerStats.Instance.burstInterval);
         }
@@ -52,6 +61,13 @@ public class PlayerAttack : MonoBehaviour
 
     EnemyAI FindClosestEnemy()
     {
+        if (_currentTarget != null)
+        {
+            float dist = Vector3.Distance(transform.position, _currentTarget.transform.position);
+            if (dist <= attackRadius)
+                return _currentTarget;
+        }
+
         var hits = Physics.OverlapSphere(transform.position, attackRadius, enemyLayer);
 
         EnemyAI closest = null;
@@ -59,14 +75,21 @@ public class PlayerAttack : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            float dist = Vector3.SqrMagnitude(hit.transform.position - transform.position);
+            var enemy = hit.GetComponent<EnemyAI>();
+            if (enemy == null) continue;
+
+            Vector3 diff = hit.transform.position - transform.position;
+            diff.y = 0f;
+            float dist = diff.sqrMagnitude;
+
             if (dist < closestDist)
             {
                 closestDist = dist;
-                closest = hit.GetComponent<EnemyAI>();
+                closest = enemy;
             }
         }
 
+        _currentTarget = closest;
         return closest;
     }
 

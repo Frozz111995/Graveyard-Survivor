@@ -22,6 +22,10 @@ public class EnemyConfig : ScriptableObject
     public EnemyAI prefab;
     public int initialPoolSize = 20;
     
+    [Header("Drop")]
+    public int xpOrbCount = 1;
+    public float xpPerOrb = 10f;
+    
     [Header("Elite")]
     public float eliteUnlockDelay = 300f; // 5 минут после unlockAfterSeconds
     public bool canSpawnElite = true;
@@ -33,6 +37,7 @@ public class EnemyConfig : ScriptableObject
     public float eliteHpMult = 3f;
     public float eliteSpeedMult = 1.5f;
     public float eliteSizeMult = 1.4f;
-    public Material eliteMaterial;         // фиолетовый/чёрный материал
-    public GameObject eliteOnDeathFx;      // взрыв при смерти
+    public float eliteXpMult = 4f;
+    public Material eliteMaterial;
+    public GameObject eliteOnDeathFx;
 }

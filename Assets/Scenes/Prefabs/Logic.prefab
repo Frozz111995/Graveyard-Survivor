@@ -91,6 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d033ec3350cde45a2d4c8948eb2545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startInterval: 3
+  rampDuration: 180
   margin: 5
   spawnInterval: 1
   capPhases:
@@ -466,7 +468,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c1c8fd879deab43b07fe9d07cfee31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSizePerPrefab: 3
 --- !u!114 &4110216579412971079
 MonoBehaviour:
   m_ObjectHideFlags: 0
