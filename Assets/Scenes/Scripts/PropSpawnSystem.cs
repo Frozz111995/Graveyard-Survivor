@@ -34,7 +34,7 @@ public class PropSpawnSystem : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             var go = Instantiate(propPrefabs[Random.Range(0, propPrefabs.Length)]);
-            go.AddComponent<SphereCollider>();
+            go.AddComponent<BoxCollider>();
             go.SetActive(false);
             _pool.Push(go);
         }
