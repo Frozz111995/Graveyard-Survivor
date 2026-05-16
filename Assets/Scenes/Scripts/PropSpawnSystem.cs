@@ -16,6 +16,7 @@ public class PropSpawnSystem : MonoBehaviour
     public float updateInterval = 0.4f;
     public float groundY        = -1f;
     public float scaleMultiplier = 1f; 
+    public float safeZoneRadius = 5f;
     
     readonly Stack<GameObject>                        _pool      = new();
     readonly Dictionary<Vector2Int, List<GameObject>> _active    = new();
@@ -118,6 +119,11 @@ public class PropSpawnSystem : MonoBehaviour
 
         for (int i = 0; i < propsPerChunk; i++)
         {
+            var pos = origin + new Vector3((float)(rng.NextDouble() * chunkSize), 0f, (float)(rng.NextDouble() * chunkSize));
+    
+            // пропускаем если слишком близко к центру мира (точка старта игрока)
+            if (pos.magnitude < safeZoneRadius) continue;
+            
             list.Add(new PropData
             {
                 position = origin + new Vector3((float)(rng.NextDouble() * chunkSize), 0f, (float)(rng.NextDouble() * chunkSize)),

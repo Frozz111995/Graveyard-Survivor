@@ -6,9 +6,10 @@ public class PlayerSpawner : MonoBehaviour
     public CameraFollow cameraFollow;
     public EnemySpawner enemySpawner;
     [SerializeField] PropSpawnSystem propSpawnSystem;
+    public Transform spawnPoint;
     void Start()
     {
-        var playerObj = Instantiate(playerPrefab);
+        var playerObj = Instantiate(playerPrefab, spawnPoint.position, Quaternion.Euler(0f, 180f, 0f));
         propSpawnSystem.Initialize(playerObj.transform);
         var player = playerObj.GetComponentInChildren<PlayerMovement>();
         player.Init(GameBootstrap.Input);
