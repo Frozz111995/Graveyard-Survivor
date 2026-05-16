@@ -595,3 +595,4 @@ MonoBehaviour:
   groundY: -1
   scaleMultiplier: 3
   safeZoneRadius: 20
+  slipperyMaterial: {fileID: 13400000, guid: 76b57864473e85a4595ed1baa00fb15f, type: 2}

@@ -17,7 +17,7 @@ public class PropSpawnSystem : MonoBehaviour
     public float groundY        = -1f;
     public float scaleMultiplier = 1f; 
     public float safeZoneRadius = 5f;
-    
+    [SerializeField] PhysicMaterial slipperyMaterial;
     readonly Stack<GameObject>                        _pool      = new();
     readonly Dictionary<Vector2Int, List<GameObject>> _active    = new();
     readonly Dictionary<Vector2Int, List<PropData>>   _chunkData = new();
@@ -34,7 +34,14 @@ public class PropSpawnSystem : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             var go = Instantiate(propPrefabs[Random.Range(0, propPrefabs.Length)]);
-            go.AddComponent<BoxCollider>();
+        
+            var col = go.GetComponent<Collider>();
+            if (col != null) col.material = slipperyMaterial;
+        
+            var sphere = go.GetComponent<SphereCollider>();
+            if (sphere == null) sphere = go.AddComponent<SphereCollider>();
+            sphere.material = slipperyMaterial;
+
             go.SetActive(false);
             _pool.Push(go);
         }
