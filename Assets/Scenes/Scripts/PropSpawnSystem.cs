@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Маркер-компонент для хранения индекса префаба
+public class PropIndex : MonoBehaviour
+{
+    public int value;
+}
+
 public class PropSpawnSystem : MonoBehaviour
 {
     [Header("References")]
@@ -9,42 +15,109 @@ public class PropSpawnSystem : MonoBehaviour
     public GameObject[] propPrefabs;
 
     [Header("Tuning")]
-    public float chunkSize      = 20f;
-    public int   viewDistance   = 3;
-    public int   propsPerChunk  = 5;
-    public int   poolSize       = 300;
-    public float updateInterval = 0.4f;
-    public float groundY        = -1f;
-    public float scaleMultiplier = 1f; 
-    public float safeZoneRadius = 5f;
+    public float chunkSize       = 20f;
+    public int   viewDistance    = 3;
+    public int   propsPerChunk   = 5;
+    public int   poolSize        = 300;
+    public float updateInterval  = 0.4f;
+    public float groundY         = -1f;
+    public float scaleMultiplier = 1f;
+    public float safeZoneRadius  = 5f;
+
     [SerializeField] PhysicMaterial slipperyMaterial;
     [SerializeField] float minPropDistance = 3f;
 
-    readonly Stack<GameObject>                        _pool      = new();
-    readonly Dictionary<Vector2Int, List<GameObject>> _active    = new();
-    readonly Dictionary<Vector2Int, List<PropData>>   _chunkData = new();
+    // Отдельный пул для каждого префаба
+    readonly Dictionary<int, Stack<GameObject>>        _pools     = new();
+    readonly Dictionary<Vector2Int, List<GameObject>>  _active    = new();
+    readonly Dictionary<Vector2Int, List<PropData>>    _chunkData = new();
+
     Vector2Int _lastPlayerChunk = new(int.MaxValue, 0);
     float _timer;
 
+    // ─────────────────────────────────────────────
+    //  Инициализация
+    // ─────────────────────────────────────────────
+
+    public void Initialize(Transform playerTransform)
+    {
+        player = playerTransform;
+        WarmPool();
+        UpdateChunks(WorldToChunk(player.position));
+    }
+
     void Start() { }
+
+    // ─────────────────────────────────────────────
+    //  Прогрев пула
+    // ─────────────────────────────────────────────
 
     void WarmPool()
     {
-        for (int i = 0; i < poolSize; i++)
-        {
-            var go = Instantiate(propPrefabs[Random.Range(0, propPrefabs.Length)]);
-        
-            var col = go.GetComponent<Collider>();
-            if (col != null) col.material = slipperyMaterial;
-        
-            var sphere = go.GetComponent<SphereCollider>();
-            if (sphere == null) sphere = go.AddComponent<SphereCollider>();
-            sphere.material = slipperyMaterial;
+        int countPerPrefab = Mathf.Max(1, poolSize / propPrefabs.Length);
 
-            go.SetActive(false);
-            _pool.Push(go);
+        for (int i = 0; i < propPrefabs.Length; i++)
+        {
+            _pools[i] = new Stack<GameObject>();
+
+            for (int j = 0; j < countPerPrefab; j++)
+            {
+                var go = CreateProp(i);
+                go.SetActive(false);
+                _pools[i].Push(go);
+            }
         }
     }
+
+    // ─────────────────────────────────────────────
+    //  Создание одного пропа с правильным коллайдером
+    // ─────────────────────────────────────────────
+
+    GameObject CreateProp(int prefabIndex)
+    {
+        var go = Instantiate(propPrefabs[prefabIndex]);
+        go.name = $"Prop_{prefabIndex}";
+
+        // Запоминаем индекс через компонент-маркер
+        go.AddComponent<PropIndex>().value = prefabIndex;
+
+        // Удаляем все существующие коллайдеры (могли быть на префабе)
+        foreach (var col in go.GetComponentsInChildren<Collider>())
+            Destroy(col);
+
+        // Ищем меш (может быть на дочернем объекте)
+        var meshFilter = go.GetComponentInChildren<MeshFilter>();
+        var box = go.AddComponent<BoxCollider>();
+
+        if (meshFilter != null)
+        {
+            // sharedMesh.bounds — локальные bounds меша, без учёта поворота
+            Bounds b = meshFilter.sharedMesh.bounds;
+
+            // Если меш на дочернем объекте — переводим center в пространство корня
+            box.center = go.transform.InverseTransformPoint(
+                meshFilter.transform.TransformPoint(b.center)
+            );
+
+            // size делится на localScale корня, потому что BoxCollider умножает
+            // size на localScale автоматически — нам нужен размер в локальных единицах корня
+            Vector3 worldSize = meshFilter.transform.TransformVector(b.size);
+            box.size = new Vector3(
+                Mathf.Abs(worldSize.x) / go.transform.lossyScale.x,
+                Mathf.Abs(worldSize.y) / go.transform.lossyScale.y,
+                Mathf.Abs(worldSize.z) / go.transform.lossyScale.z
+            );
+        }
+
+        if (slipperyMaterial != null)
+            box.material = slipperyMaterial;
+
+        return go;
+    }
+
+    // ─────────────────────────────────────────────
+    //  Update
+    // ─────────────────────────────────────────────
 
     void Update()
     {
@@ -61,12 +134,9 @@ public class PropSpawnSystem : MonoBehaviour
         UpdateChunks(playerChunk);
     }
 
-    public void Initialize(Transform playerTransform)
-    {
-        player = playerTransform;
-        WarmPool();
-        UpdateChunks(WorldToChunk(player.position));
-    }
+    // ─────────────────────────────────────────────
+    //  Управление чанками
+    // ─────────────────────────────────────────────
 
     void UpdateChunks(Vector2Int center)
     {
@@ -75,25 +145,25 @@ public class PropSpawnSystem : MonoBehaviour
         for (int z = -viewDistance; z <= viewDistance; z++)
             needed.Add(center + new Vector2Int(x, z));
 
+        // Деактивируем чанки вне зоны видимости
         var toRemove = new List<Vector2Int>();
         foreach (var kv in _active)
         {
             if (!needed.Contains(kv.Key))
             {
                 foreach (var go in kv.Value)
-                {
-                    go.SetActive(false);
-                    _pool.Push(go);
-                }
+                    ReturnToPool(go);
+
                 toRemove.Add(kv.Key);
             }
         }
         foreach (var key in toRemove) _active.Remove(key);
 
+        // Спавним новые чанки
         foreach (var chunk in needed)
         {
-            if (_active.ContainsKey(chunk)) continue;
-            SpawnChunk(chunk);
+            if (!_active.ContainsKey(chunk))
+                SpawnChunk(chunk);
         }
     }
 
@@ -104,9 +174,9 @@ public class PropSpawnSystem : MonoBehaviour
 
         foreach (var data in positions)
         {
-            if (_pool.Count == 0) break;
+            var go = GetFromPool(data.prefabIndex);
+            if (go == null) continue;
 
-            var go = _pool.Pop();
             go.transform.position   = data.position;
             go.transform.rotation   = data.rotation;
             go.transform.localScale = data.scale * scaleMultiplier;
@@ -116,6 +186,34 @@ public class PropSpawnSystem : MonoBehaviour
 
         _active[chunk] = spawned;
     }
+
+    // ─────────────────────────────────────────────
+    //  Работа с пулом
+    // ─────────────────────────────────────────────
+
+    GameObject GetFromPool(int prefabIndex)
+    {
+        if (_pools.TryGetValue(prefabIndex, out var pool) && pool.Count > 0)
+            return pool.Pop();
+
+        // Пул пустой — создаём новый объект на лету
+        return CreateProp(prefabIndex);
+    }
+
+    void ReturnToPool(GameObject go)
+    {
+        go.SetActive(false);
+
+        var marker = go.GetComponent<PropIndex>();
+        if (marker != null && _pools.TryGetValue(marker.value, out var pool))
+            pool.Push(go);
+        else
+            Destroy(go); // на всякий случай, если маркер потерян
+    }
+
+    // ─────────────────────────────────────────────
+    //  Генерация данных чанка
+    // ─────────────────────────────────────────────
 
     List<PropData> GetChunkData(Vector2Int chunk)
     {
@@ -129,7 +227,12 @@ public class PropSpawnSystem : MonoBehaviour
         while (list.Count < propsPerChunk && attempts < propsPerChunk * 10)
         {
             attempts++;
-            var pos = origin + new Vector3((float)(rng.NextDouble() * chunkSize), 0f, (float)(rng.NextDouble() * chunkSize));
+
+            var pos = origin + new Vector3(
+                (float)(rng.NextDouble() * chunkSize),
+                0f,
+                (float)(rng.NextDouble() * chunkSize)
+            );
 
             if (Vector3.Distance(pos, Vector3.zero) < safeZoneRadius) continue;
 
@@ -146,15 +249,20 @@ public class PropSpawnSystem : MonoBehaviour
 
             list.Add(new PropData
             {
-                position = pos,
-                rotation = Quaternion.Euler(0f, (float)(rng.NextDouble() * 360f), 0f),
-                scale    = Vector3.one * (0.8f + (float)(rng.NextDouble() * 0.5f)),
+                position    = pos,
+                rotation    = Quaternion.Euler(0f, (float)(rng.NextDouble() * 360f), 0f),
+                scale       = Vector3.one * (0.8f + (float)(rng.NextDouble() * 0.5f)),
+                prefabIndex = rng.Next(0, propPrefabs.Length), // фиксируем тип объекта
             });
         }
 
         _chunkData[chunk] = list;
         return list;
     }
+
+    // ─────────────────────────────────────────────
+    //  Утилиты
+    // ─────────────────────────────────────────────
 
     Vector2Int WorldToChunk(Vector3 pos)
         => new(Mathf.FloorToInt(pos.x / chunkSize),
@@ -165,5 +273,6 @@ public class PropSpawnSystem : MonoBehaviour
         public Vector3    position;
         public Quaternion rotation;
         public Vector3    scale;
+        public int        prefabIndex;
     }
 }

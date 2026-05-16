@@ -1,10 +1,14 @@
+// MobileInput.cs
 using UnityEngine;
 
 public class MobileInput : MonoBehaviour, IInputProvider
 {
-    public Vector2 GetMove()
+    DragInput _drag;
+
+    void Awake()
     {
-        // сюда позже подключишь джойстик
-        return Vector2.zero;
+        _drag = DragInput.Create();
     }
+
+    public Vector2 GetMove() => _drag.GetMove();
 }

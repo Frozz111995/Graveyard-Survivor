@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 6201209041987773415}
   - component: {fileID: 2035234095705766860}
   - component: {fileID: 5228835905650518839}
+  - component: {fileID: 7372557112620163514}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -304,6 +305,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1283550e0beec04a8e1fd8566cc172e, type: 2}
   - {fileID: 11400000, guid: 568a8f66fe476a14582851a2b7e21955, type: 2}
   - {fileID: 11400000, guid: 4b100db22d7ad894e9ad33ae638da922, type: 2}
+  animDuration: 0.3
 --- !u!114 &6201209041987773415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +347,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 0}
+--- !u!114 &7372557112620163514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7490948552986743694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a12bb4c1a17604d98d07cdd4d49975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 0}
+  animDuration: 0.3
+  propSpawnSystem: {fileID: 5919215327082036416}
 --- !u!1 &7538526138161919030
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseXP: 100
   growthXP: 100
+  levelUpSound: {fileID: 8300000, guid: 29c525641c65c7847bac7b9c859bffdf, type: 3}
 --- !u!1 &7925700889897183133
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,10 +607,11 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: c31fe3d52e47ef84bb25b89be992cc65, type: 3}
   chunkSize: 20
   viewDistance: 3
-  propsPerChunk: 5
+  propsPerChunk: 1
   poolSize: 300
   updateInterval: 0.4
   groundY: -1
   scaleMultiplier: 3
   safeZoneRadius: 20
   slipperyMaterial: {fileID: 13400000, guid: 76b57864473e85a4595ed1baa00fb15f, type: 2}
+  minPropDistance: 20
