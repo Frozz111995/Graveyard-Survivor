@@ -19,16 +19,14 @@ public class PropSpawnSystem : MonoBehaviour
     public float safeZoneRadius = 5f;
     [SerializeField] PhysicMaterial slipperyMaterial;
     [SerializeField] float minPropDistance = 3f;
+
     readonly Stack<GameObject>                        _pool      = new();
     readonly Dictionary<Vector2Int, List<GameObject>> _active    = new();
     readonly Dictionary<Vector2Int, List<PropData>>   _chunkData = new();
     Vector2Int _lastPlayerChunk = new(int.MaxValue, 0);
     float _timer;
 
-    void Start()
-    {
-        WarmPool();
-    }
+    void Start() { }
 
     void WarmPool()
     {
@@ -66,6 +64,8 @@ public class PropSpawnSystem : MonoBehaviour
     public void Initialize(Transform playerTransform)
     {
         player = playerTransform;
+        WarmPool();
+        UpdateChunks(WorldToChunk(player.position));
     }
 
     void UpdateChunks(Vector2Int center)

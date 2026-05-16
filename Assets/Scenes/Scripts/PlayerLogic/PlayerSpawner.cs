@@ -16,10 +16,7 @@ public class PlayerSpawner : MonoBehaviour
 
         var playerTransform = playerObj.transform;
 
-        // камера
         cameraFollow.SetTarget(playerTransform);
-
-        // враги теперь знают игрока
         enemySpawner.SetPlayer(playerTransform);
     }
 }

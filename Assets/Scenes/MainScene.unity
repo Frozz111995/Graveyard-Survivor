@@ -196,6 +196,18 @@ AudioSource:
     type: 3}
   m_PrefabInstance: {fileID: 2595587466846899857}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &705115133 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5919215327082036416, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6887612388294532494}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7609396598cb3694498e4894e462f5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820336963
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +520,7 @@ PrefabInstance:
     - target: {fileID: 2521505594837825748, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 170.24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2521505594837825748, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
@@ -533,7 +545,7 @@ PrefabInstance:
     - target: {fileID: 2565825874394483757, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 521.26
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2565825874394483757, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
@@ -623,6 +635,11 @@ PrefabInstance:
     - target: {fileID: 3952002744781237442, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174503603955825103, guid: 4015d308cb6d45542996512bd12d8a43,
+        type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5083815078124501778, guid: 4015d308cb6d45542996512bd12d8a43,
@@ -718,7 +735,7 @@ PrefabInstance:
     - target: {fileID: 8289200145264055245, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 224.78998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8289200145264055245, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
@@ -929,6 +946,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 2082896379}
+  animDuration: 0.3
+  propSpawnSystem: {fileID: 705115133}
 --- !u!1001 &8452932446219236925
 PrefabInstance:
   m_ObjectHideFlags: 0

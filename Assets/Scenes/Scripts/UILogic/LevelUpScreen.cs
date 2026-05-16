@@ -1,19 +1,16 @@
 // LevelUpScreen.cs
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using System.Collections;
 
 public class LevelUpScreen : MonoBehaviour
 {
     [SerializeField] GameObject panel;
-    [SerializeField] UpgradeCard[] cards; // 3 карточки
+    [SerializeField] UpgradeCard[] cards;
     [SerializeField] Upgrade[] allUpgrades;
-
-    GameObject _player;
+    [SerializeField] float animDuration = 0.3f;
 
     void Start()
     {
-        _player = GameObject.FindWithTag("Player");
         XPSystem.Instance.OnLevelUp += HandleLevelUp;
         panel.SetActive(false);
     }
@@ -27,7 +24,22 @@ public class LevelUpScreen : MonoBehaviour
     {
         Time.timeScale = 0;
         panel.SetActive(true);
+        panel.transform.localScale = Vector3.zero;
         ShowUpgrades();
+        StartCoroutine(ScaleIn());
+    }
+
+    IEnumerator ScaleIn()
+    {
+        float elapsed = 0f;
+        while (elapsed < animDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / animDuration);
+            panel.transform.localScale = Vector3.one * Mathf.SmoothStep(0f, 1f, t);
+            yield return null;
+        }
+        panel.transform.localScale = Vector3.one;
     }
 
     void ShowUpgrades()
@@ -55,6 +67,20 @@ public class LevelUpScreen : MonoBehaviour
     void OnUpgradeChosen(Upgrade upgrade)
     {
         upgrade.Apply();
+        StartCoroutine(ScaleOut(upgrade));
+    }
+
+    IEnumerator ScaleOut(Upgrade upgrade)
+    {
+        float elapsed = 0f;
+        while (elapsed < animDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / animDuration);
+            panel.transform.localScale = Vector3.one * Mathf.SmoothStep(1f, 0f, t);
+            yield return null;
+        }
+        panel.transform.localScale = Vector3.one;
         panel.SetActive(false);
         Time.timeScale = 1;
     }
