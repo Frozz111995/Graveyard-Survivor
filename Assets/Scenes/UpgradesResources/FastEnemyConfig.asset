@@ -32,5 +32,4 @@ MonoBehaviour:
   eliteSizeMult: 1.4
   eliteXpMult: 4
   eliteMaterial: {fileID: 2100000, guid: 9cc02a0063afcc34c802673f496a110f, type: 2}
-  eliteOnDeathFx: {fileID: 332507411106518682, guid: ee38c7d51e48dd34fbefd8e1e3ade517,
-    type: 3}
+  eliteOnDeathFx: {fileID: 118320, guid: e8f64584f5542c34ab6260cb866629ab, type: 3}

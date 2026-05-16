@@ -3,6 +3,25 @@ using UnityEngine;
 public class HealthOrb : MonoBehaviour
 {
     [SerializeField] float healAmount = 20f;
+    [SerializeField] Color orbColor = new Color(0f, 1f, 0.3f);
+
+    Renderer _renderer;
+    MaterialPropertyBlock _propBlock;
+    OrbFloat _orbFloat;
+
+    void Awake()
+    {
+        _renderer = GetComponentInChildren<Renderer>();
+        _propBlock = new MaterialPropertyBlock();
+        _orbFloat = GetComponent<OrbFloat>();
+
+        _renderer.GetPropertyBlock(_propBlock);
+        _propBlock.SetColor("_BaseColor", orbColor);
+        _propBlock.SetColor("_EmissionColor", orbColor * 2f);
+        _renderer.SetPropertyBlock(_propBlock);
+
+        _orbFloat.SetEmissionColor(orbColor * 2f);
+    } 
 
     void OnTriggerEnter(Collider other)
     {

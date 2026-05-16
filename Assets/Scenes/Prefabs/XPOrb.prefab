@@ -134,3 +134,10 @@ MonoBehaviour:
   groundY: 0
   floatAmplitude: 0.15
   floatSpeed: 2
+  arcHeight: 1.5
+  arcDuration: 0.4
+  scatterRadius: 1.2
+  rotateSpeed: 90
+  pulseSpeed: 2
+  pulseMin: 0.5
+  pulseMax: 1

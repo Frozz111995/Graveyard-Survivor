@@ -58,7 +58,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 180
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -101,8 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashDuration: 0.1
   flashColor: {r: 2, g: 2, b: 2, a: 1}
-  deathParticles: {fileID: 6584224753604373311, guid: 5975e0aee511b1d4985ad2afb924f565,
-    type: 3}
+  deathParticles: {fileID: 19883972, guid: 5713bd92b2cb6e0449c02d3a08a8a596, type: 3}
   hitParticles: {fileID: 6584224753604373311, guid: ab962258bf049ee4b843ebf6a933f241,
     type: 3}
   deathSounds:
@@ -129,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebc75a9d5c83a54b89b0bdf6224c87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthOrbChance: 0.3
+  healthOrbChance: 0.1
 --- !u!1001 &2348147334682373202
 PrefabInstance:
   m_ObjectHideFlags: 0

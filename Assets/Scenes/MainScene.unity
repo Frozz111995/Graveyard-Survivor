@@ -457,6 +457,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2170436532635131524, guid: 4015d308cb6d45542996512bd12d8a43,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2521505594837825748, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -566,6 +571,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7576871592489041588, guid: 4015d308cb6d45542996512bd12d8a43,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7781310561675796834, guid: 4015d308cb6d45542996512bd12d8a43,
         type: 3}
@@ -742,11 +752,6 @@ PrefabInstance:
       propertyPath: panel
       value: 
       objectReference: {fileID: 1912862248}
-    - target: {fileID: 5919215327082036416, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
-        type: 3}
-      propertyPath: safeZoneRadius
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 6201209041987773415, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
         type: 3}
       propertyPath: slider
@@ -796,11 +801,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Environment
-      objectReference: {fileID: 0}
-    - target: {fileID: 6313885108845656622, guid: 3dbb4d67d9b5de34aa446fa8a6b8e606,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7166310253726511097, guid: 3dbb4d67d9b5de34aa446fa8a6b8e606,
         type: 3}
