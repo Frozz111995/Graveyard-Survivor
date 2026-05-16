@@ -154,6 +154,7 @@ MonoBehaviour:
     type: 3}
   cameraFollow: {fileID: 0}
   enemySpawner: {fileID: 7465716240968463274}
+  propSpawnSystem: {fileID: 5919215327082036416}
 --- !u!1 &6357122452254817809
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +242,7 @@ Transform:
   - {fileID: 8528371905328761581}
   - {fileID: 5595565453660146865}
   - {fileID: 8097969133063105421}
+  - {fileID: 9035860532762809879}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7490948552986743694
@@ -402,6 +404,7 @@ GameObject:
   - component: {fileID: 8581998482874907116}
   - component: {fileID: 4110216579412971079}
   - component: {fileID: 99223816271537680}
+  - component: {fileID: 3682653524779772349}
   m_Layer: 0
   m_Name: PoolSystems
   m_TagString: Untagged
@@ -497,3 +500,96 @@ MonoBehaviour:
   prefab: {fileID: 4530268943462252601, guid: 80e26731a364cd94290b223f6c3b83c5, type: 3}
   orbsRoot: {fileID: 0}
   initialSize: 30
+--- !u!114 &3682653524779772349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925700889897183133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14ec0f74a45fba47a4088bb14adc96b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: -420922455565339564, guid: 0b32156e7f47e374181ea691db627203, type: 3}
+  orbsRoot: {fileID: 0}
+  initialSize: 10
+--- !u!1 &8241012518686301627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9035860532762809879}
+  - component: {fileID: 5919215327082036416}
+  m_Layer: 0
+  m_Name: PropSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9035860532762809879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241012518686301627}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3976985091596841435}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5919215327082036416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241012518686301627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7609396598cb3694498e4894e462f5f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  propPrefabs:
+  - {fileID: 919132149155446097, guid: 6c24430c39c22014eb3c585b3c3c0a94, type: 3}
+  - {fileID: 919132149155446097, guid: be1a23637c5993f43998f467c1007460, type: 3}
+  - {fileID: 919132149155446097, guid: c78f424b65f4fa04084dbee7cc4f67cc, type: 3}
+  - {fileID: 919132149155446097, guid: 92b0dc57afac4264a8e1b3e8bac8644a, type: 3}
+  - {fileID: 919132149155446097, guid: 721de185cf2423449bac65f8c3b877af, type: 3}
+  - {fileID: 919132149155446097, guid: b94533d384356f84cbeaddc972b32e1e, type: 3}
+  - {fileID: 919132149155446097, guid: 45863d969dc27a944b98aea22be0f2f1, type: 3}
+  - {fileID: 919132149155446097, guid: 64ee0f8916adf7b4e8f4a0a4299e69a9, type: 3}
+  - {fileID: 919132149155446097, guid: b74f9cb37d7603649a572f0d43da05b2, type: 3}
+  - {fileID: 919132149155446097, guid: 04ee441ebe551eb4babacb1b23fd3c4f, type: 3}
+  - {fileID: 919132149155446097, guid: 93b75330288268a4b82193b3bf388641, type: 3}
+  - {fileID: 919132149155446097, guid: e09150e8e85ba274a92ed73905265426, type: 3}
+  - {fileID: 919132149155446097, guid: acef86004880039428760abb56d6f7f9, type: 3}
+  - {fileID: 919132149155446097, guid: b6d7ef5580d3fe2419eba74340a1f320, type: 3}
+  - {fileID: 919132149155446097, guid: eaf964e5c5b9e9c4993d4d4d4c92c35a, type: 3}
+  - {fileID: 919132149155446097, guid: 05bbbb07128f6f24da58109a74e225cd, type: 3}
+  - {fileID: 919132149155446097, guid: a97c800abb09270418f7c805d7b38741, type: 3}
+  - {fileID: 919132149155446097, guid: e5220f59e44573e41bc402a66685bc82, type: 3}
+  - {fileID: 919132149155446097, guid: 017c7fcf285944447b6dce53e61bab92, type: 3}
+  - {fileID: 919132149155446097, guid: 6e0bce2e43f460e42a9505813c953328, type: 3}
+  - {fileID: 919132149155446097, guid: 72cb8629a1d96934cb014578bbbdeb34, type: 3}
+  - {fileID: 919132149155446097, guid: 2d6aceed5f2e06a46924f38f2e32bee9, type: 3}
+  - {fileID: 919132149155446097, guid: 17d78f055389f8c409c81ddcf8b7d0f3, type: 3}
+  - {fileID: 919132149155446097, guid: 312f127c70a87354e9fe47992317f103, type: 3}
+  - {fileID: 919132149155446097, guid: c31fe3d52e47ef84bb25b89be992cc65, type: 3}
+  chunkSize: 20
+  viewDistance: 3
+  propsPerChunk: 5
+  poolSize: 300
+  updateInterval: 0.4
+  groundY: -1
+  scaleMultiplier: 3
