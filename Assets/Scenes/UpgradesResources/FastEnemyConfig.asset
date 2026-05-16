@@ -21,7 +21,7 @@ MonoBehaviour:
   prefab: {fileID: 2871191470483429980, guid: 65abc57b808decc43959f6148376a9e3, type: 3}
   initialPoolSize: 20
   xpOrbCount: 1
-  xpPerOrb: 10
+  xpPerOrb: 15
   eliteUnlockDelay: 300
   canSpawnElite: 1
   eliteChanceBase: 0
