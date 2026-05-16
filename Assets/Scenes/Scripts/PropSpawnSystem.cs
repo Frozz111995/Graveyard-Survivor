@@ -18,6 +18,7 @@ public class PropSpawnSystem : MonoBehaviour
     public float scaleMultiplier = 1f; 
     public float safeZoneRadius = 5f;
     [SerializeField] PhysicMaterial slipperyMaterial;
+    [SerializeField] float minPropDistance = 3f;
     readonly Stack<GameObject>                        _pool      = new();
     readonly Dictionary<Vector2Int, List<GameObject>> _active    = new();
     readonly Dictionary<Vector2Int, List<PropData>>   _chunkData = new();
@@ -124,16 +125,28 @@ public class PropSpawnSystem : MonoBehaviour
         var list   = new List<PropData>(propsPerChunk);
         var origin = new Vector3(chunk.x * chunkSize, groundY, chunk.y * chunkSize);
 
-        for (int i = 0; i < propsPerChunk; i++)
+        int attempts = 0;
+        while (list.Count < propsPerChunk && attempts < propsPerChunk * 10)
         {
+            attempts++;
             var pos = origin + new Vector3((float)(rng.NextDouble() * chunkSize), 0f, (float)(rng.NextDouble() * chunkSize));
-    
-            // пропускаем если слишком близко к центру мира (точка старта игрока)
-            if (pos.magnitude < safeZoneRadius) continue;
-            
+
+            if (Vector3.Distance(pos, Vector3.zero) < safeZoneRadius) continue;
+
+            bool tooClose = false;
+            foreach (var existing in list)
+            {
+                if (Vector3.Distance(pos, existing.position) < minPropDistance)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+            if (tooClose) continue;
+
             list.Add(new PropData
             {
-                position = origin + new Vector3((float)(rng.NextDouble() * chunkSize), 0f, (float)(rng.NextDouble() * chunkSize)),
+                position = pos,
                 rotation = Quaternion.Euler(0f, (float)(rng.NextDouble() * 360f), 0f),
                 scale    = Vector3.one * (0.8f + (float)(rng.NextDouble() * 0.5f)),
             });
