@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healAmount: 20
   orbColor: {r: 0, g: 1, b: 0.3, a: 1}
+  collectSound: {fileID: 8300000, guid: 79a76882e063ecd49ad65639152f0de4, type: 3}
 --- !u!114 &7395528534271090874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +93,8 @@ MonoBehaviour:
   pulseSpeed: 2
   pulseMin: 0.5
   pulseMax: 1
+  magnetRadius: 1.5
+  magnetSpeed: 8
 --- !u!1001 &5064848325944045496
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,12 +8,13 @@ public class XPSystem : MonoBehaviour
 
     [SerializeField] float baseXP = 100f;
     [SerializeField] float growthXP = 30f;
+    [SerializeField] AudioClip levelUpSound;
 
     float _currentXP;
     int _currentLevel;
 
-    public event Action<float, float> OnXPChanged;  // current, required
-    public event Action<int> OnLevelUp;             // new level
+    public event Action<float, float> OnXPChanged;
+    public event Action<int> OnLevelUp;
 
     public int CurrentLevel => _currentLevel;
     public float CurrentXP => _currentXP;
@@ -28,7 +29,7 @@ public class XPSystem : MonoBehaviour
     {
         _currentXP += amount;
         CheckLevelUp();
-        OnXPChanged?.Invoke(_currentXP, RequiredXP); // после чеклевелап — актуальные значения
+        OnXPChanged?.Invoke(_currentXP, RequiredXP);
     }
 
     void CheckLevelUp()
@@ -38,6 +39,7 @@ public class XPSystem : MonoBehaviour
         _currentXP -= RequiredXP;
         _currentLevel++;
         OnLevelUp?.Invoke(_currentLevel);
+        AudioPool.Instance.Play(levelUpSound, transform.position, randomPitch: false);
         CheckLevelUp();
     }
 }

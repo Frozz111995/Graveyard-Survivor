@@ -24,14 +24,15 @@ public class AudioPool : MonoBehaviour
         }
     }
 
-    public void Play(AudioClip clip, Vector3 position, bool randomPitch = true)
+    public void Play(AudioClip clip, Vector3 position, bool randomPitch = true, float volume = 1f, float pitch = -1f)
     {
         if (clip == null) return;
 
         var source = GetFree();
         source.transform.position = position;
         source.clip = clip;
-        source.pitch = randomPitch ? Random.Range(pitchRange.x, pitchRange.y) : 1f;
+        source.pitch = pitch > 0f ? pitch : randomPitch ? Random.Range(pitchRange.x, pitchRange.y) : 1f;
+        source.volume = volume;
         source.Play();
     }
 

@@ -8,7 +8,7 @@ public class XPOrb : MonoBehaviour
     static readonly Color ColorMedium = Color.cyan;
     static readonly Color ColorLarge  = new Color(1f, 0.5f, 0f);
     static readonly Color ColorElite  = new Color(0.8f, 0f, 1f);
-
+    [SerializeField] AudioClip collectSound;
     Renderer _renderer;
     MaterialPropertyBlock _propBlock;
     OrbFloat _orbFloat;
@@ -54,6 +54,7 @@ public class XPOrb : MonoBehaviour
 
     public void Collect()
     {
+        AudioPool.Instance.Play(collectSound, transform.position, volume: 0.3f, pitch: Random.Range(0.5f, 1.2f));
         XPSystem.Instance.AddXP(_xpAmount);
         XPOrbPool.Instance.Return(this);
     }

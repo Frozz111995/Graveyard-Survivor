@@ -1,3 +1,4 @@
+// OrbFloat.cs
 using UnityEngine;
 
 public class OrbFloat : MonoBehaviour
@@ -12,6 +13,10 @@ public class OrbFloat : MonoBehaviour
     [SerializeField] float pulseSpeed = 2f;
     [SerializeField] float pulseMin = 1f;
     [SerializeField] float pulseMax = 3f;
+
+    [Header("Magnet")]
+    [SerializeField] float magnetRadius = 1.5f;
+    [SerializeField] float magnetSpeed = 8f;
 
     float _baseY;
     float _timeOffset;
@@ -70,15 +75,39 @@ public class OrbFloat : MonoBehaviour
         }
         else
         {
-            Vector3 pos = transform.position;
-            pos.y = _baseY + Mathf.Sin(Time.time * floatSpeed + _timeOffset) * floatAmplitude;
-            transform.position = pos;
-            transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f);
+            if (PlayerPositionCache.Exists)
+            {
+                float dist = Vector3.Distance(transform.position, PlayerPositionCache.Position);
+                if (dist <= magnetRadius)
+                {
+                    transform.position = Vector3.MoveTowards(
+                        transform.position,
+                        PlayerPositionCache.Position,
+                        magnetSpeed * Time.deltaTime
+                    );
+                }
+                else
+                {
+                    ApplyFloat();
+                }
+            }
+            else
+            {
+                ApplyFloat();
+            }
         }
 
         float intensity = Mathf.Lerp(pulseMin, pulseMax, (Mathf.Sin(Time.time * pulseSpeed + _timeOffset) + 1f) * 0.5f);
         _renderer.GetPropertyBlock(_propBlock);
         _propBlock.SetColor("_EmissionColor", _emissionColor * intensity);
         _renderer.SetPropertyBlock(_propBlock);
+    }
+
+    void ApplyFloat()
+    {
+        Vector3 pos = transform.position;
+        pos.y = _baseY + Mathf.Sin(Time.time * floatSpeed + _timeOffset) * floatAmplitude;
+        transform.position = pos;
+        transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f);
     }
 }

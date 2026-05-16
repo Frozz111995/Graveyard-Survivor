@@ -4,7 +4,7 @@ public class HealthOrb : MonoBehaviour
 {
     [SerializeField] float healAmount = 20f;
     [SerializeField] Color orbColor = new Color(0f, 1f, 0.3f);
-
+    [SerializeField] AudioClip collectSound;
     Renderer _renderer;
     MaterialPropertyBlock _propBlock;
     OrbFloat _orbFloat;
@@ -26,6 +26,7 @@ public class HealthOrb : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+        AudioPool.Instance.Play(collectSound, transform.position, volume: 0.3f, pitch: Random.Range(0.5f, 1.2f));
         PlayerStats.Instance.Heal(healAmount);
         HealthOrbPool.Instance.Return(this);
     }

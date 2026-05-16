@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f48d61856e0a914c9262ca506a9d121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectSound: {fileID: 8300000, guid: 7af7707a1d5f4ee45a098751466ccddb, type: 3}
 --- !u!114 &-49693973927297092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +142,5 @@ MonoBehaviour:
   pulseSpeed: 2
   pulseMin: 0.5
   pulseMax: 1
+  magnetRadius: 1.5
+  magnetSpeed: 8
