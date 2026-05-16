@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cbb9e83f4861a34b8bf03735df3bc7d, type: 3}
   m_Name: TankConfig
   m_EditorClassIdentifier: 
-  maxHP: 120
+  maxHP: 150
   moveSpeed: 1.5
   contactDamage: 20
   damageCooldown: 1
@@ -21,15 +21,15 @@ MonoBehaviour:
   prefab: {fileID: 2871191470483429980, guid: fdbb46d40059be3488f0bbbb3e1171e4, type: 3}
   initialPoolSize: 20
   xpOrbCount: 1
-  xpPerOrb: 30
+  xpPerOrb: 20
   eliteUnlockDelay: 300
   canSpawnElite: 1
   eliteChanceBase: 0
   eliteChancePerMinute: 0.04
   eliteChanceMax: 0.4
-  eliteHpMult: 3
-  eliteSpeedMult: 1.5
-  eliteSizeMult: 1.4
-  eliteXpMult: 4
+  eliteHpMult: 6
+  eliteSpeedMult: 2
+  eliteSizeMult: 2
+  eliteXpMult: 3
   eliteMaterial: {fileID: 2100000, guid: 4b709ad397bb219409755576302c7f25, type: 2}
   eliteOnDeathFx: {fileID: 134748, guid: cf5f38f279e41b54888156aadaba6c39, type: 3}

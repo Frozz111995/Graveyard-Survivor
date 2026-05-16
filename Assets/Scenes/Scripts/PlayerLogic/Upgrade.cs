@@ -4,15 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game/Upgrade")]
 public class Upgrade : ScriptableObject
 {
-    public string upgradeName => type switch
-    {
-        UpgradeType.AttackSpeed => "Attack Speed",
-        UpgradeType.MaxHP => "Max HP",
-        UpgradeType.ProjectileCount => "Projectile Count",
-        _ => type.ToString()
-    };
+    [Header("Display")]
+    public string upgradeName;
     [TextArea] public string description;
     public Sprite icon;
+
+    [Header("Stats")]
     public UpgradeType type;
     public float value;
 

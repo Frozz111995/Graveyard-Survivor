@@ -94,7 +94,7 @@ MonoBehaviour:
   startInterval: 3
   rampDuration: 180
   margin: 5
-  spawnInterval: 1
+  spawnInterval: 0.5
   capPhases:
   - untilMinutes: 5
     softCap: 60
@@ -103,8 +103,8 @@ MonoBehaviour:
     softCap: 90
     hardCap: 120
   - untilMinutes: 999
-    softCap: 130
-    hardCap: 160
+    softCap: 260
+    hardCap: 380
   maxSlowdownMultiplier: 5
 --- !u!1 &5894049620850972542
 GameObject:
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseXP: 100
-  growthXP: 60
+  growthXP: 100
 --- !u!1 &7925700889897183133
 GameObject:
   m_ObjectHideFlags: 0

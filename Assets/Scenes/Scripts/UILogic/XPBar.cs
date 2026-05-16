@@ -26,6 +26,6 @@ public class XPBar : MonoBehaviour
 
     void HandleLevelUp(int level)
     {
-        levelText.text = $"Level {level}";
+        levelText.text = $"Уровень {level}";
     }
 }
