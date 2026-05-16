@@ -697,6 +697,16 @@ PrefabInstance:
       propertyPath: panel
       value: 
       objectReference: {fileID: 1912862248}
+    - target: {fileID: 5919215327082036416, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: propsPerChunk
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5919215327082036416, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
+        type: 3}
+      propertyPath: minPropDistance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6201209041987773415, guid: 72633e5ea32e56646b7ba0681c5a9ef1,
         type: 3}
       propertyPath: slider
