@@ -16,4 +16,4 @@ MonoBehaviour:
   nameKey: upgrade_movespeed_name
   descriptionKey: upgrade_movespeed_desc
   type: 2
-  value: 1
+  value: 0.7
