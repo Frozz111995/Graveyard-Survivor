@@ -1,12 +1,12 @@
 // StartMenu.cs
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class StartMenu : MonoBehaviour
 {
     [SerializeField] GameObject panel;
     [SerializeField] float animDuration = 0.3f;
-    [SerializeField] PropSpawnSystem propSpawnSystem;
     public static bool GameStarted = false;
 
     void Start()
@@ -22,6 +22,15 @@ public class StartMenu : MonoBehaviour
             panel.transform.localScale = Vector3.one;
             Time.timeScale = 0f;
         }
+
+    }
+
+    public void ToggleLanguage()
+    {
+        var next = LocalizationManager.Current == LocalizationManager.Language.Russian
+            ? LocalizationManager.Language.English
+            : LocalizationManager.Language.Russian;
+        LocalizationManager.SetLanguage(next);
     }
 
     public void StartGame()

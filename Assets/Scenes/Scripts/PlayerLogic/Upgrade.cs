@@ -5,9 +5,11 @@ using UnityEngine;
 public class Upgrade : ScriptableObject
 {
     [Header("Display")]
-    public string upgradeName;
-    [TextArea] public string description;
     public Sprite icon;
+
+    [Header("Localization Keys")]
+    public string nameKey;        // например "upgrade_damage_name"
+    public string descriptionKey; // например "upgrade_damage_desc"
 
     [Header("Stats")]
     public UpgradeType type;

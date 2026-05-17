@@ -26,10 +26,10 @@ MonoBehaviour:
   canSpawnElite: 1
   eliteChanceBase: 0
   eliteChancePerMinute: 0.033
-  eliteChanceMax: 0.4
-  eliteHpMult: 3
+  eliteChanceMax: 0.6
+  eliteHpMult: 4
   eliteSpeedMult: 2
   eliteSizeMult: 2
-  eliteXpMult: 2
+  eliteXpMult: 3
   eliteMaterial: {fileID: 2100000, guid: 8c18bb9b553b34142b7749a8963fdf00, type: 2}
   eliteOnDeathFx: {fileID: 101484, guid: 89626156f1b4bc649a7f6f51542f7dba, type: 3}

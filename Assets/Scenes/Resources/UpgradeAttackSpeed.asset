@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0597f81d5c98d2444a70082d69b3f598, type: 3}
-  m_Name: UpgradeDamage
+  m_Name: UpgradeAttackSpeed
   m_EditorClassIdentifier: 
-  upgradeName: "\u0423\u0440\u043E\u043D"
-  description: "\u041A\u0430\u0436\u0434\u044B\u0439 \u0441\u043D\u0430\u0440\u044F\u0434
-    \u0431\u044C\u0435\u0442 \u0431\u043E\u043B\u044C\u043D\u0435\u0435"
-  icon: {fileID: 21300000, guid: d9d70a1660e31ca48b641cbdf7774a37, type: 3}
-  type: 0
-  value: 5
+  icon: {fileID: 21300000, guid: a334731a669ec344ca32ffbfb91f2ddb, type: 3}
+  nameKey: upgrade_attackspeed_name
+  descriptionKey: upgrade_attackspeed_desc
+  type: 1
+  value: 0.1
