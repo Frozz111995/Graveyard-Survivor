@@ -1,5 +1,15 @@
 {
-    "stringPrefs": [],
-    "intPrefs": [],
+    "stringPrefs": [
+        {
+            "key": "SelectModuleToggle_YG2",
+            "value": "BannerAdv;InterstitialAdv;PluginYG2;Localization"
+        }
+    ],
+    "intPrefs": [
+        {
+            "key": "FirstStartup_YG2",
+            "value": 2
+        }
+    ],
     "floatPrefs": []
 }

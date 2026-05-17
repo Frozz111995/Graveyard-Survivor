@@ -1,6 +1,7 @@
 // GameOverScreen.cs
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using YG;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameOverScreen : MonoBehaviour
 
     void HandleDeath()
     {
+        YG2.InterstitialAdvShow();
         panel.SetActive(true);
         Time.timeScale = 0f;
     }

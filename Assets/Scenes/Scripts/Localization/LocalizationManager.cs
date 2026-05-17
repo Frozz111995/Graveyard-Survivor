@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using YG;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -16,9 +17,20 @@ public class LocalizationManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            DetectLanguage();
         }
         else Destroy(gameObject);
+    }
+
+    void OnEnable()
+    {
+        YG2.onSwitchLang += OnLangChanged;
+        YG2.onCorrectLang += OnLangChanged;
+    }
+
+    void OnDisable()
+    {
+        YG2.onSwitchLang -= OnLangChanged;
+        YG2.onCorrectLang -= OnLangChanged;
     }
 
 #if UNITY_EDITOR
@@ -26,17 +38,18 @@ public class LocalizationManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            var next = Current == Language.Russian ? Language.English : Language.Russian;
-            SetLanguage(next);
+            var next = Current == Language.Russian ? "en" : "ru";
+            YG2.SwitchLanguage(next);
             Debug.Log($"[Localization] Switched to: {next}");
         }
     }
 #endif
 
-    void DetectLanguage()
+    void OnLangChanged(string lang)
     {
-        var lang = Application.systemLanguage;
-        Current = lang == SystemLanguage.Russian ? Language.Russian : Language.English;
+        Current = lang == "ru" ? Language.Russian : Language.English;
+        Debug.Log($"[Localization] Language set: {lang} → {Current}");
+        SetLanguage(Current);
     }
 
     public static string Get(string key)

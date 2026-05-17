@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Aleksander Frolov
+  companyName: Aleksandr Frolov
   productName: Graveyard Survivor
   defaultCursor: {fileID: 2800000, guid: 635b0af616a5abc45924675931b5969e, type: 3}
   cursorHotspot: {x: 0, y: 0}
@@ -47,7 +47,7 @@ PlayerSettings:
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
-  m_ActiveColorSpace: 1
+  m_ActiveColorSpace: 0
   unsupportedMSAAFallback: 0
   m_SpriteBatchVertexThreshold: 300
   m_MTRendering: 1
@@ -796,14 +796,14 @@ PlayerSettings:
   blurSplashScreenBackground: 1
   spritePackerPolicy: 
   webGLMemorySize: 32
-  webGLExceptionSupport: 1
+  webGLExceptionSupport: 2
   webGLNameFilesAsHashes: 0
   webGLShowDiagnostics: 0
   webGLDataCaching: 1
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: APPLICATION:Default
+  webGLTemplate: PROJECT:YandexGames
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 0
@@ -819,17 +819,17 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: PLUGIN_YG_2;TMP_YG2
-    LinuxHeadlessSimulation: PLUGIN_YG_2;TMP_YG2
-    Nintendo Switch: PLUGIN_YG_2;TMP_YG2
-    PS4: PLUGIN_YG_2;TMP_YG2
-    PS5: PLUGIN_YG_2;TMP_YG2
-    Standalone: PLUGIN_YG_2;TMP_YG2
-    WebGL: PLUGIN_YG_2;TMP_YG2
-    Windows Store Apps: PLUGIN_YG_2;TMP_YG2
-    XboxOne: PLUGIN_YG_2;TMP_YG2
-    iPhone: PLUGIN_YG_2;TMP_YG2
-    tvOS: PLUGIN_YG_2;TMP_YG2
+    Android: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    LinuxHeadlessSimulation: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    Nintendo Switch: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    PS4: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    PS5: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    Standalone: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    WebGL: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    Windows Store Apps: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    XboxOne: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    iPhone: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
+    tvOS: PLUGIN_YG_2;TMP_YG2;YandexGamesPlatform_yg;RU_YG2;InterstitialAdv_yg;Localization_yg
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
@@ -845,7 +845,7 @@ PlayerSettings:
     QNX: 1
     Stadia: 1
     VisionOS: 1
-    WebGL: 1
+    WebGL: 4
     Windows Store Apps: 1
     XboxOne: 1
     iPhone: 1
