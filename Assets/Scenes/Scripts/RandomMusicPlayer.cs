@@ -40,7 +40,6 @@ public class RandomMusicPlayer : MonoBehaviour
     {
         if (tracks == null || tracks.Count == 0)
         {
-            Debug.LogWarning("[RandomMusicPlayer] Список треков пуст!");
             return;
         }
 
@@ -145,7 +144,6 @@ public class RandomMusicPlayer : MonoBehaviour
         AudioClip clip = tracks[clipIndex];
         if (clip == null)
         {
-            Debug.LogWarning($"[RandomMusicPlayer] Трек #{clipIndex} равен null, пропускаю.");
             _isTransitioning = false;
             PlayNext();
             return;
@@ -156,7 +154,6 @@ public class RandomMusicPlayer : MonoBehaviour
         _audioSource.volume = volume;
         _audioSource.Play();
 
-        Debug.Log($"[RandomMusicPlayer] Играет: {clip.name} (индекс {clipIndex})");
     }
 
     private IEnumerator PlayNextWithDelay()
