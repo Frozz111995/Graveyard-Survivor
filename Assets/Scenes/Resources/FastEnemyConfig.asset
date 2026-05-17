@@ -28,7 +28,7 @@ MonoBehaviour:
   eliteChancePerMinute: 0.05
   eliteChanceMax: 0.6
   eliteHpMult: 6
-  eliteSpeedMult: 3
+  eliteSpeedMult: 2
   eliteSizeMult: 2
   eliteXpMult: 3
   eliteMaterial: {fileID: 2100000, guid: 9cc02a0063afcc34c802673f496a110f, type: 2}

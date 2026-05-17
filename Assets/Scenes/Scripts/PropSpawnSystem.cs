@@ -13,6 +13,7 @@ public class PropSpawnSystem : MonoBehaviour
     [Header("References")]
     public Transform player;
     public GameObject[] propPrefabs;
+    public Transform propRoot; // ← корень для всех спавнящихся пропсов
 
     [Header("Tuning")]
     public float chunkSize       = 20f;
@@ -42,11 +43,25 @@ public class PropSpawnSystem : MonoBehaviour
     public void Initialize(Transform playerTransform)
     {
         player = playerTransform;
+        EnsurePropRoot();
         WarmPool();
         UpdateChunks(WorldToChunk(player.position));
     }
 
     void Start() { }
+
+    // ─────────────────────────────────────────────
+    //  Гарантируем наличие корня
+    // ─────────────────────────────────────────────
+
+    void EnsurePropRoot()
+    {
+        if (propRoot != null) return;
+
+        // Если не задан в инспекторе — создаём автоматически
+        var go = new GameObject("PropRoot");
+        propRoot = go.transform;
+    }
 
     // ─────────────────────────────────────────────
     //  Прогрев пула
@@ -75,7 +90,8 @@ public class PropSpawnSystem : MonoBehaviour
 
     GameObject CreateProp(int prefabIndex)
     {
-        var go = Instantiate(propPrefabs[prefabIndex]);
+        // Инстанциируем сразу в propRoot
+        var go = Instantiate(propPrefabs[prefabIndex], propRoot);
         go.name = $"Prop_{prefabIndex}";
 
         // Запоминаем индекс через компонент-маркер
@@ -91,16 +107,12 @@ public class PropSpawnSystem : MonoBehaviour
 
         if (meshFilter != null)
         {
-            // sharedMesh.bounds — локальные bounds меша, без учёта поворота
             Bounds b = meshFilter.sharedMesh.bounds;
 
-            // Если меш на дочернем объекте — переводим center в пространство корня
             box.center = go.transform.InverseTransformPoint(
                 meshFilter.transform.TransformPoint(b.center)
             );
 
-            // size делится на localScale корня, потому что BoxCollider умножает
-            // size на localScale автоматически — нам нужен размер в локальных единицах корня
             Vector3 worldSize = meshFilter.transform.TransformVector(b.size);
             box.size = new Vector3(
                 Mathf.Abs(worldSize.x) / go.transform.lossyScale.x,
@@ -177,6 +189,7 @@ public class PropSpawnSystem : MonoBehaviour
             var go = GetFromPool(data.prefabIndex);
             if (go == null) continue;
 
+            go.transform.SetParent(propRoot, worldPositionStays: false); // ← гарантируем правильный родитель
             go.transform.position   = data.position;
             go.transform.rotation   = data.rotation;
             go.transform.localScale = data.scale * scaleMultiplier;
@@ -208,7 +221,7 @@ public class PropSpawnSystem : MonoBehaviour
         if (marker != null && _pools.TryGetValue(marker.value, out var pool))
             pool.Push(go);
         else
-            Destroy(go); // на всякий случай, если маркер потерян
+            Destroy(go);
     }
 
     // ─────────────────────────────────────────────
@@ -252,7 +265,7 @@ public class PropSpawnSystem : MonoBehaviour
                 position    = pos,
                 rotation    = Quaternion.Euler(0f, (float)(rng.NextDouble() * 360f), 0f),
                 scale       = Vector3.one * (0.8f + (float)(rng.NextDouble() * 0.5f)),
-                prefabIndex = rng.Next(0, propPrefabs.Length), // фиксируем тип объекта
+                prefabIndex = rng.Next(0, propPrefabs.Length),
             });
         }
 
