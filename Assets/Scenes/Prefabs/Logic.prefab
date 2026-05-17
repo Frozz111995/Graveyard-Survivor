@@ -103,8 +103,8 @@ MonoBehaviour:
     softCap: 90
     hardCap: 120
   - untilMinutes: 999
-    softCap: 260
-    hardCap: 380
+    softCap: 130
+    hardCap: 200
   maxSlowdownMultiplier: 5
 --- !u!1 &5522533678892693959
 GameObject:

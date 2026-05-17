@@ -26,7 +26,7 @@ public class EnemyAI : MonoBehaviour
     public EnemyConfig Config { get; private set; }
     public bool IsElite => _isElite;
     public float XpMult => _eliteXpMult;
-    public Vector3 Velocity => (_player.position - transform.position).normalized * _moveSpeed;
+    public Vector3 Velocity => _cc.velocity;
     public GameObject GetEliteDeathFx() => _eliteOnDeathFx;
 
     void Awake()
