@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
     {
         Vector3 enemyCenter = enemy.GetComponent<Collider>().bounds.center;
         float distance = Vector3.Distance(origin, enemyCenter);
-        float timeToReach = distance / projectileSpeed;
+        float timeToReach = Mathf.Min(distance / projectileSpeed, 0.3f); // клампим время
         return enemyCenter + enemy.Velocity * timeToReach;
     }
 

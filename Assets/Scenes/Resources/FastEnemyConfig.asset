@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FastEnemyConfig
   m_EditorClassIdentifier: 
   maxHP: 20
-  moveSpeed: 5
+  moveSpeed: 6
   contactDamage: 8
   damageCooldown: 1
   unlockAfterSeconds: 120
@@ -27,7 +27,7 @@ MonoBehaviour:
   eliteChanceBase: 0
   eliteChancePerMinute: 0.05
   eliteChanceMax: 0.6
-  eliteHpMult: 6
+  eliteHpMult: 5
   eliteSpeedMult: 2
   eliteSizeMult: 2
   eliteXpMult: 3

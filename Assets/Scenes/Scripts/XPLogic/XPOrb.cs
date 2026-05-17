@@ -6,8 +6,10 @@ public class XPOrb : MonoBehaviour
 
     static readonly Color ColorSmall  = Color.yellow;
     static readonly Color ColorMedium = Color.cyan;
-    static readonly Color ColorLarge  = new Color(1f, 0.5f, 0f);
-    static readonly Color ColorElite  = new Color(0.8f, 0f, 1f);
+    static readonly Color ColorBig = new Color(0.9f, 0.4f, 0f);
+    static readonly Color ColorLarge  = new Color(0.604f, 0f, 1f);
+    static readonly Color ColorElite  = new Color(0f, 0.098f, 1f);
+    static readonly Color ColorBigElite  = new Color(0.729f, 0f, 0f);
     [SerializeField] AudioClip collectSound;
     Renderer _renderer;
     MaterialPropertyBlock _propBlock;
@@ -31,9 +33,11 @@ public class XPOrb : MonoBehaviour
         (float scale, Color color) = xp switch
         {
             <= 10f => (0.6f, ColorSmall),
-            <= 20f => (0.9f, ColorMedium),
-            <= 30f => (1.2f, ColorLarge),
-            _      => (1.6f, ColorElite),
+            <= 15f => (0.9f, ColorMedium),
+            <= 20f => (1.2f, ColorBig),
+            <= 30f => (1.6f, ColorLarge),
+            <= 45f => (2.0f, ColorElite),
+            _      => (2.4f, ColorBigElite),
         };
 
         transform.localScale = Vector3.one * scale;

@@ -148,6 +148,14 @@ public class EnemySpawner : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4)) DebugSpawn(0, true);
         if (Input.GetKeyDown(KeyCode.Alpha5)) DebugSpawn(1, true);
         if (Input.GetKeyDown(KeyCode.Alpha6)) DebugSpawn(2, true);
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            CapPhase phase = capPhases[capPhases.Length - 1];
+            int toSpawn = phase.hardCap - EnemyPool.Instance.ActiveCount;
+            for (int i = 0; i < toSpawn; i++)
+                SpawnEnemy();
+            Debug.Log($"[EnemySpawner] spawned {toSpawn} enemies | total: {EnemyPool.Instance.ActiveCount}");
+        }
     }
 
     void DebugSpawn(int index, bool isElite)
