@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class DragInput : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [SerializeField] float deadZone = 10f;
-    [SerializeField] float sensitivity = 0.5f;
 
     Vector2 _startPos;
     Vector2 _delta;
@@ -48,11 +47,8 @@ public class DragInput : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
     public Vector2 GetMove()
     {
         if (!_pressing) return Vector2.zero;
-
-        Vector2 raw = _delta;
-        if (raw.magnitude < deadZone) return Vector2.zero;
-
-        return Vector2.ClampMagnitude((raw - raw.normalized * deadZone) * sensitivity / Screen.dpi, 1f);
+        if (_delta.magnitude < deadZone) return Vector2.zero;
+        return _delta.normalized;
     }
 
     public void OnPointerDown(PointerEventData e)
