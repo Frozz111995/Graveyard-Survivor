@@ -21,13 +21,13 @@ public class GameOverScreen : MonoBehaviour
 
     void HandleDeath()
     {
-        YG2.InterstitialAdvShow();
         panel.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void Restart()
     {
+        YG2.InterstitialAdvShow();
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

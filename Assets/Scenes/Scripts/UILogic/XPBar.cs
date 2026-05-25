@@ -1,5 +1,6 @@
 // XPBar.cs
 
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class XPBar : MonoBehaviour
         XPSystem.Instance.OnXPChanged += HandleXPChanged;
         XPSystem.Instance.OnLevelUp += HandleLevelUp;
         LocalizationManager.OnLanguageChanged += UpdateLevelText;
+        UpdateLevelText();
     }
 
     void OnDestroy()
