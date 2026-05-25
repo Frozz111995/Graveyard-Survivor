@@ -16,6 +16,7 @@ public class XPBar : MonoBehaviour
         XPSystem.Instance.OnXPChanged += HandleXPChanged;
         XPSystem.Instance.OnLevelUp += HandleLevelUp;
         LocalizationManager.OnLanguageChanged += UpdateLevelText;
+        UpdateLevelText();
     }
 
     void OnDestroy()
